@@ -1,0 +1,40 @@
+import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Register from './components/auth/register';
+import Login from './components/auth/login';
+import Info from './components/auth/getinfoform';
+import Information from './components/auth/information';
+import ResponsiveAppBar from './components/navbar';
+import Home from './components/auth/home';
+
+function App() {
+  // Set the initial state of isLoggedIn based on localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const storedId = localStorage.getItem('userId');
+    return !!storedId; // Convert storedId to a boolean
+  });
+
+  useEffect(() => {
+    // You can use useEffect to update the isLoggedIn state when localStorage changes
+    const storedId = localStorage.getItem('userId');
+    setIsLoggedIn(!!storedId);
+  }, []);
+
+  return (
+    <Router>
+      <div className="App">
+        <ResponsiveAppBar isLoggedIn={isLoggedIn} />
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/getinfo" element={<Info />} />
+          <Route path="/information" element={<Information />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;

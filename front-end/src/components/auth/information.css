@@ -1,0 +1,80 @@
+.subject-card {
+    background-color: rgba(113, 165, 186, 0.9);
+    width: 80%;
+    margin: 20px auto; /* Add margin for spacing */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.subject-card-info{
+  background-color: rgba(113, 165, 186, 0.9);
+  width: 80%;
+  margin: 20px auto; /* Add margin for spacing */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+/* Style for subject marks */
+.subject-mark {
+    font-weight: bold;
+}
+
+/* App.css */
+
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .styled-table th, .styled-table td {
+    background-color: white;
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .styled-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .styled-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+
+  /* Assuming you have a container class */
+.container {
+    text-align: start; /* Center align the content horizontally */
+    margin-top: 20px; /* Add some top margin for spacing */
+  }
+
+.container p{
+  font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+}
+  
+  
+  /* Style the table header row */
+  .display-flex {
+    display: flex; /* Use flexbox to align the headers horizontally */
+    justify-content: space-between; /* Space items evenly along the horizontal axis */
+    background-color: #f2f2f2; /* Light gray background color for the header row */
+    padding: 10px; /* Add padding to the header row */
+    border: 1px solid #ddd; /* Add a border to the header row */
+    border-radius: 5px; /* Add some rounded corners to the header row */
+  }
+
+  .center-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  }
+  
+
