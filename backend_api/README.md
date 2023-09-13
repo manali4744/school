@@ -1,6 +1,6 @@
 ## Install Converto dependencies
   ```bash
-  $ python install -r requirements.txt
+  $ pip install -r requirements.txt
   ```
 
 ##  create database psql.
