@@ -38,6 +38,10 @@ function ResponsiveAppBar({ isLoggedIn }) {
   const gotologin = () =>{
     navigate('/login')
   };
+
+  const gotoblog = () => {
+    navigate('/blog')
+  };
   const handleMenuItemClick = (page) => {
     let message = '';
 
@@ -50,6 +54,7 @@ function ResponsiveAppBar({ isLoggedIn }) {
         break;
       case 'Blog':
         message = 'bbb';
+        gotoblog();
         break;
       case 'Login':
         message = 'Login'

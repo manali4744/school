@@ -6,7 +6,8 @@ from .models import *
 
 admin.site.register(Subject)
 admin.site.register(class_subject)
-# admin.site.register(SubGrade)
+admin.site.register(Blog)
+admin.site.register(Announcement)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('email','name','gender','is_active','is_valid','is_admin','division')

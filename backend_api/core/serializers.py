@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import User, SubGrade, Subject
+from .models import User, SubGrade, Subject, Blog, Announcement
 
 class UserRegistrationSerializers(serializers.ModelSerializer):
     # card_details = AddcardSerializer(many=True,read_only=True)
@@ -69,3 +69,16 @@ class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'name', 'gender', 'division', 'Standards']
+
+class BlogSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Blog
+        fields = '__all__'
+
+
+class AnnouncementSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Announcement
+        fields = '__all__'

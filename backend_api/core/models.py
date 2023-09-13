@@ -122,5 +122,25 @@ class class_subject(models.Model):
     def __str__(self):
         return f"Class {self.standard}"
     
+
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=4000, null=True, blank=True)
+    blog_img = models.ImageField(null= True, blank= True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=255)
+    date = models.DateField()
+    extra_info = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
     
 

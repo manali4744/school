@@ -2,11 +2,12 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, UserInfoSerializer
+from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
+                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
-from .models import User, Result, SubGrade
+from .models import User, Result, SubGrade, Blog, Announcement
 
 # Create your views here.
 class UserRegistrationView(APIView):
@@ -102,3 +103,18 @@ class ResultInfo(APIView):
             user = User.objects.get(id=id)
             user_info = UserInfoSerializer(user)
             return Response({'User': user_info.data})
+        
+class GetBlog(APIView):
+    
+    def get(self, request):
+        blog = Blog.objects.all()
+        serializer = BlogSerializer(blog, many=True)
+        return Response({'blog': serializer.data, 'status': status.HTTP_200_OK})
+    
+
+class AnnouncementInfo(APIView):
+
+    def get(self, request):
+        announcement = Announcement.objects.all()
+        serializer = AnnouncementSerializer(announcement, many=True)
+        return Response({'announcement': serializer.data, 'status': status.HTTP_200_OK})

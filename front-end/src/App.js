@@ -7,6 +7,7 @@ import Info from './components/auth/getinfoform';
 import Information from './components/auth/information';
 import ResponsiveAppBar from './components/navbar';
 import Home from './components/auth/home';
+import Blog from './components/auth/blog';
 
 function App() {
   // Set the initial state of isLoggedIn based on localStorage
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/login" element={<Login />} />
           <Route path="/getinfo" element={<Info />} />
           <Route path="/information" element={<Information />} />
