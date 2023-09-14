@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './information.css';
+import { useNavigate } from 'react-router-dom';
 
 function Information() {
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem('jwt_token')
+  if (!token){
+    navigate('/login')
+  }
+
+
   const [resultData, setResultData] = useState(null);
   const [grade, setGrade] = useState(null);
   const [total, setTotal] = useState(null);
   const [pass, setPass] = useState(null);
   const [user, setUser] = useState(null);
-  const storedId = localStorage.getItem('userId');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/getresult/${storedId}/`);
+        const token = localStorage.getItem('jwt_token')
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = await axios.get(`http://127.0.0.1:8000/getresult/`, config);
         const { Result, Grade, Total_mark, pass_fail, User } = response.data;
         setResultData(Result);
         setGrade(Grade);
@@ -21,12 +35,11 @@ function Information() {
         setPass(pass_fail);
         setUser(User);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        navigate('/login')
       }
     }
-
     fetchData();
-  }, [storedId]);
+  }, []);
 
   return (
     <div className="center-container">

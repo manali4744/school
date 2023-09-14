@@ -4,14 +4,15 @@ import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 
 function Home() {
-    const [announcementdata, setAnnouncementdata] = useState([]);
-    const [showAnnouncement, setShowAnnouncement] = useState(false);
+    const [announcementData, setAnnouncementData] = useState([]);
+    const [showItem, setShowItem] = useState(false); // Initially, hide the item
+    const [hiddenAnnouncements, setHiddenAnnouncements] = useState([]); // To store the indices of hidden announcements
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/announcement/');
-                setAnnouncementdata(response.data.announcement);
+                setAnnouncementData(response.data.announcement);
                 console.log(response.data.announcement);
             } catch (error) {
                 console.log("Error:", error);
@@ -20,17 +21,19 @@ function Home() {
 
         fetchData();
 
-        // Set a timeout to show the announcement after 5 seconds
-        const timer = setTimeout(() => {
-            setShowAnnouncement(true);
-        }, 5000);
+        // Delay showing the item for 5 seconds
+        const delay = 5000; // 5 seconds in milliseconds
+        const timeoutId = setTimeout(() => {
+            setShowItem(true);
+        }, delay);
 
         // Clean up the timer when the component unmounts
-        return () => clearTimeout(timer);
+        return () => clearTimeout(timeoutId);
     }, []);
 
-    const handleClearClick = () => {
-        setShowAnnouncement(false);
+    const handleClearClick = (index) => {
+        // Add the index of the clicked announcement to hiddenAnnouncements
+        setHiddenAnnouncements([...hiddenAnnouncements, index]);
     };
 
     return (
@@ -46,26 +49,28 @@ function Home() {
                     }
                 `}
             </style>
-            <div>
-                {showAnnouncement && announcementdata.map((data, index) => (
-                    <div key={index} className="announcement">
-                        <div className="container" style={{ display: 'flex', alignItems: 'center' }}>
-                            <div>
-                                <ClearIcon
-                                    style={{ marginLeft: '750px', marginTop: '10px', color: 'black', cursor: 'pointer' }}
-                                    onClick={handleClearClick}
-                                />
+            {showItem && (
+                <div className="item">
+                    {announcementData.map((data, index) => (
+                        // Check if the index is not in the hiddenAnnouncements array
+                        !hiddenAnnouncements.includes(index) && (
+                            <div key={index} className="announcement">
+                                <div>
+                                    <ClearIcon
+                                        style={{ marginLeft: '500px', color: 'black', cursor: 'pointer', marginTop: '10px' }}
+                                        onClick={() => handleClearClick(index)}
+                                    />
+                                </div>
+                                <div>
+                                    <h1>{data.title}</h1>
+                                    <p>{data.date}</p>
+                                    <p>{data.extra_info}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                                {/* Render your announcement data here */}
-                                <h1>{data.title}</h1>
-                                <p>{data.date}</p>
-                                <p>{data.extra_info}</p>
-                            </div>
-                    </div>
-                ))}
-            </div>
+                        )
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

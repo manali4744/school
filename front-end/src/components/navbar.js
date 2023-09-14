@@ -25,9 +25,6 @@ function ResponsiveAppBar({ isLoggedIn }) {
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    // if (isLoggedIn) {
-      
-    // }
   };
 
   const handleCloseNavMenu = () => {
@@ -42,15 +39,24 @@ function ResponsiveAppBar({ isLoggedIn }) {
   const gotoblog = () => {
     navigate('/blog')
   };
+  const gotoresult = () => {
+    navigate('/information')
+  };
+
+  const gotoevent = () => {
+    navigate('/event')
+  };
+
   const handleMenuItemClick = (page) => {
     let message = '';
 
     switch (page) {
       case 'Events':
         message = 'eee';
+        gotoevent();
         break;
       case 'Result':
-        message = 'rrr';
+        gotoresult();
         break;
       case 'Blog':
         message = 'bbb';
@@ -73,7 +79,7 @@ function ResponsiveAppBar({ isLoggedIn }) {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#2b4c6d', opacity: '0.5'}}>
+    <AppBar position="static" style={{ backgroundColor: 'rgb(45, 156, 168)', opacity: '0.5'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -155,7 +161,7 @@ function ResponsiveAppBar({ isLoggedIn }) {
               <Button
                 key={page}
                 onClick={() => handleMenuItemClick(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', fontWeight:700 }}
               >
                 {page}
               </Button>

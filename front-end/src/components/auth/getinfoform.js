@@ -48,8 +48,14 @@ function Info() {
   const sendFormDataToAPI = async () => {
     try {
       const storedId = localStorage.getItem('userId');
-      console.log(storedId);
-      const response = await axios.put(`http://127.0.0.1:8000/getinformation/${storedId}/`, formData); // Check the API endpoint URL
+      const token = localStorage.getItem('jwt_token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log(storedId, token);
+      const response = await axios.put(`http://127.0.0.1:8000/getinformation/`, formData, config); // Check the API endpoint URL
       if (response.data.status === 200){
         navigate('/information')
       }

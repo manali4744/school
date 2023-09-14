@@ -3,13 +3,26 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
-                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer)
+                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
-from .models import User, Result, SubGrade, Blog, Announcement
+from .models import User, Result, SubGrade, Blog, Announcement, Event
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.decorators import login_required
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+
 class UserRegistrationView(APIView):
 
     def post(self, request):
@@ -22,6 +35,7 @@ class UserRegistrationView(APIView):
                              'data': serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
 class UserLoginView(APIView):
 
     def post(self, request):
@@ -30,23 +44,31 @@ class UserLoginView(APIView):
             email = serializer.data.get('email')
             password = serializer.data.get('password')
             user = authenticate(email=email, password=password)
-            user_data = User.objects.get(id=user.id)
-            user_info = UserInfoSerializer(user_data)
-            if user_info.data['gender'] is not None and user_info.data['division'] is not None and  user_info.data['Standards'] is not None:
-                collected_info = True
             if user is not None:
-                return Response({'msg': 'Login Success', 'status': status.HTTP_200_OK, 'id': user.id, 'collected_info': collected_info}, status=status.HTTP_200_OK)
+                jwt_token = get_tokens_for_user(user)
+                print(jwt_token['access'])
+                user_data = User.objects.get(id=user.id)
+                user_info = UserInfoSerializer(user_data)
+                collected_info = False
+                if user_info.data['gender'] is not None and user_info.data['division'] is not None and  user_info.data['Standards'] is not None:
+                    collected_info = True
+                return Response({'msg': 'Login Success', 'status': status.HTTP_200_OK, 'id': user.id, 'collected_info': collected_info, 'auth_access': jwt_token['access']}, status=status.HTTP_200_OK)
             else:
-                return Response({'msg': "User not found or password is mismatched"}, status=status.HTTP_404_NOT_FOUND)
+                try:
+                    user_exists = User.objects.get(email=email)
+                    if user_exists is not None:
+                        return Response({'msg': 'Password is Wrong', 'status': status.HTTP_400_BAD_REQUEST})
+                except:
+                    return Response({'msg': "User not found", 'status': status.HTTP_404_NOT_FOUND}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({'error': {'non_field_errors': ['Email or Password is not valid']}},
+            return Response({'msg': {'non_field_errors': ['Email or Password is not valid']}},
                             status=status.HTTP_404_NOT_FOUND)
-        
+         
 
 class UserInformation(APIView):
-
-    def put(self, request, id):
-        user = User.objects.get(id=id)
+    permission_classes = [IsAuthenticated]
+    def put(self, request):
+        user = User.objects.get(id=request.user.id)
         print(user.division)
         serializer = UserInformationSerializer(instance=user, data=request.data, partial=True)
         print(serializer)
@@ -57,7 +79,6 @@ class UserInformation(APIView):
         else:
             return Response({'error': 'error', 'status': status.HTTP_400_BAD_REQUEST},
                             status=status.HTTP_404_NOT_FOUND)
-        
 
 
 def grade_achieved(total):
@@ -82,12 +103,17 @@ def grade_achieved(total):
     else:
         return None
 
+
 class ResultInfo(APIView):
 
-    def get(self, request, id):
+    permission_classes = [IsAuthenticated]
+        
+    def get(self, request):
+        print(request.user)
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=request.user.id)
             user_info = UserInfoSerializer(user)
+            print(user.id)
             result = Result.objects.get(student=user.id)
             result_data = SubGrade.objects.filter(student=result.id)
             serializer = ResultSerializer(data=result_data, many=True)
@@ -100,7 +126,7 @@ class ResultInfo(APIView):
                 serializer.save()
             return Response({'Result': serializer.data, 'Total_mark': total_mark, 'Grade': grade, 'User': user_info.data, 'pass_fail': result_in_word})
         except Result.DoesNotExist:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=request.user.id)
             user_info = UserInfoSerializer(user)
             return Response({'User': user_info.data})
         
@@ -118,3 +144,11 @@ class AnnouncementInfo(APIView):
         announcement = Announcement.objects.all()
         serializer = AnnouncementSerializer(announcement, many=True)
         return Response({'announcement': serializer.data, 'status': status.HTTP_200_OK})
+    
+
+class EventView(APIView):
+
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many = True)
+        return Response({'event': serializer.data, 'status': status.HTTP_200_OK})

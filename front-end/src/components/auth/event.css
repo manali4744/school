@@ -1,0 +1,83 @@
+.container {
+    margin-top: 50px;
+}
+
+.card {
+    border: 10px solid whitesmoke;
+    opacity: 0.8;
+}
+
+.card-header{
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: xx-large;
+    border-bottom: 0px;
+    background-color: #408fa2;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    opacity: 0.8;
+}
+
+.card-title{
+    text-transform: capitalize;
+    font-size: x-large;
+}
+
+
+.date-display {
+    display: flex; /* Use Flexbox */
+    flex-direction: row; /* Arrange items in a row */
+    align-items: center; /* Center items vertically */
+}
+
+/* Style for each date */
+.date {
+    font-family: Arial, sans-serif;
+    background-color: #aaddea;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px; /* Add some spacing between dates */
+    opacity: 0.5;
+}
+
+/* Style for the start date */
+.start-date {
+    font-size: 20px;
+    color: black; /* Blue color */
+    font-weight: bold;
+}
+
+/* Style for the end date */
+.end-date {
+    font-size: 20px;
+    color: black; /* Pink color */
+    font-weight: bold;
+}
+
+.coordinator{
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.bullet-list {
+    list-style-type: square;
+}
+  
+.bullet-list li{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: x-large;
+}
+
+.card-text{
+    font-size: 24px;
+}
+
+.data-text{
+    font-size: 24px;
+    text-align: justify;
+    text-transform: capitalize;
+    padding: 10px;
+}

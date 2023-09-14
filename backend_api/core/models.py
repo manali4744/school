@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.validators import EmailValidator, RegexValidator, MaxValueValidator, MinValueValidator
 from django.apps import apps
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 Division = (
@@ -57,7 +58,7 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    division = models.CharField(choices=Division)
+    division = models.CharField(choices=Division, max_length=255)
     Standards = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)], null=True, blank=True)
     objects = UserManager()
 
@@ -141,6 +142,25 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    sub_title = models.CharField(max_length=255)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    description = models.CharField(max_length=4000)
+    coordinator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event_coordinator')
+    co_coordinator = models.ManyToManyField(User)
+    GD_Room = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+    
+    def clean(self):
+        if not self.coordinator.is_staff:
+            raise ValidationError('Only admin users can be assigned as coordinators.')
+
 
     
 

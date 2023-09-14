@@ -1,4 +1,4 @@
-.announcement{
+/* .announcement{
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -7,8 +7,34 @@
     height:200px;
     background-color: rgb(255, 255,255, 0.5);
     border-radius: 10px;
-}
+} */
 
 .container{
-    padding: opx;
+    padding: 0px;
+}
+
+/* Update the announcement styling */
+.announcement {
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 550px;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 10px;
+    margin-bottom: 10px; /* Add margin to create spacing between announcements */
+    display: flex; /* Use flex to stack announcements vertically */
+    flex-direction: column; /* Stack child elements vertically */
+    text-transform: uppercase;
+}
+
+
+.item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 9999;
+    right: 20px;
+    bottom: 20px;
 }

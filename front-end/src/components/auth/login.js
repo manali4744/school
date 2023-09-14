@@ -91,13 +91,14 @@ function Login() {
     try {
       const response = await axios.post('http://127.0.0.1:8000/login/', filteredFormData);
       console.log('Response Status:', response.data.status);
-      console.log('Response Data:', response.data); // Log the entire response
+      // console.log('Response auth:', response.data.auth_access); // Log the entire response
   
-      if (response.data.status === 200) {
+      if (response.data.auth_access) {
         console.log('Login successful');
         console.log(response.data.id);
         const idToStore = response.data.id;
         localStorage.setItem('userId', idToStore);
+        localStorage.setItem('jwt_token', response.data.auth_access)
         if (response.data.collected_info){
           navigate('/information')
         }
@@ -105,10 +106,14 @@ function Login() {
           navigate('/getinfo')
         }
       } else {
-        console.error('API Error:', response.status);
+        if (response.data.status === 400){
+          alert(response.data.msg)
+        }
       }
     } catch (error) {
-      console.error('API Error:', error);
+      alert("User Not found")
+      navigate('/register')
+      // console.error('API Error:', error);
     }
   };
 

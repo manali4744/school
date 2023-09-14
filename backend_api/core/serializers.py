@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import User, SubGrade, Subject, Blog, Announcement
+from .models import User, SubGrade, Subject, Blog, Announcement, Event
 
 class UserRegistrationSerializers(serializers.ModelSerializer):
     # card_details = AddcardSerializer(many=True,read_only=True)
@@ -82,3 +82,14 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
         fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+    coordinator = serializers.CharField(source='coordinator.email')
+    co_coordinator = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Event
+        fields =  '__all__'
+
+    def get_co_coordinator(self, obj):
+        return [user.email for user in obj.co_coordinator.all()]
