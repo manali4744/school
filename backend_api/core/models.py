@@ -160,6 +160,24 @@ class Event(models.Model):
     def clean(self):
         if not self.coordinator.is_staff:
             raise ValidationError('Only admin users can be assigned as coordinators.')
+        
+
+class Fee(models.Model):
+    standard = models.IntegerField(unique=True, validators=[MaxValueValidator(12), MinValueValidator(1)])
+    academic_fee = models.IntegerField()
+    lunch_fee = models.IntegerField()
+    co_curricular_fee =models.IntegerField()
+    transport_fee = models.IntegerField()
+
+    def __str__(self):
+        return self.standard.__str__()
+    
+    def calculate_total_fee(self):
+    # Calculate the total fee by adding all fee components
+        total_fee = self.academic_fee + self.lunch_fee + self.co_curricular_fee + self.transport_fee
+        return total_fee
+
+
 
 
     

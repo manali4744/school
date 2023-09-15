@@ -135,12 +135,10 @@ function Login() {
           sm={4}
           md={7}
           sx={{
-            // backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundImage: 'url(http://127.0.0.1:3000/img/school.avif)',
-            // backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
+            backgroundImage: 'url(http://127.0.0.1:3000/img/vector_login.avif)',
+            backgroundRepeat: 'no-repeat',
+            // backgroundColor: 'white',
+            backgroundSize: '50% 50%',
             backgroundPosition: 'center',
           }}
         />

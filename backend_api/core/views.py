@@ -3,11 +3,11 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
-                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer)
+                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
-from .models import User, Result, SubGrade, Blog, Announcement, Event
+from .models import User, Result, SubGrade, Blog, Announcement, Event, Fee
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
@@ -152,3 +152,10 @@ class EventView(APIView):
         events = Event.objects.all()
         serializer = EventSerializer(events, many = True)
         return Response({'event': serializer.data, 'status': status.HTTP_200_OK})
+    
+class FeesView(APIView):
+
+    def get(self, request):
+        fees = Fee.objects.all()
+        serializer = FeeSerializer(fees, many=True)
+        return Response({'fees': serializer.data, 'status': status.HTTP_200_OK})

@@ -9,6 +9,9 @@ import ResponsiveAppBar from './components/navbar';
 import Home from './components/auth/home';
 import Blog from './components/auth/blog';
 import Event from './components/auth/event';
+import Navbar from './components/newnavbar';
+import Footer from './components/footer';
+import Enrollment from './components/auth/enrollments';
 
 function App() {
   // Set the initial state of isLoggedIn based on localStorage
@@ -26,7 +29,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <ResponsiveAppBar isLoggedIn={isLoggedIn} />
+        <Navbar/>
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
@@ -35,7 +38,10 @@ function App() {
           <Route path="/getinfo" element={<Info />} />
           <Route path="/information" element={<Information />} />
           <Route path= "/event" element={<Event/>}/>
+          <Route path="/nav" element={<Navbar/>}/>
+          <Route path="/enrollment" element={<Enrollment/>}/>
         </Routes>
+        {/* <Footer/> */}
       </div>
     </Router>
   );

@@ -1,0 +1,44 @@
+.container-fluid{
+    overflow:scroll !important;
+    padding: 80px !important;
+}
+
+.center-list {
+    padding-left:800px ;
+    text-align: start;
+    list-style-position: inside; /* Place the bullet points inside the list items */
+}
+
+h1{
+    color: rebeccapurple;
+    text-transform: uppercase;
+    font-size: 50px;
+    margin-bottom: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: start;
+}
+
+li{
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: start;
+}
+
+.enrollment{
+    text-align: center;
+}
+
+.btn {
+    border-radius: 0px !important;
+    padding: 16px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+}
+
+.custom-modal {
+    max-width: 1000px; /* Set the maximum width to 1000 pixels */
+    margin: 0 auto; /* Center the modal horizontally */
+  }
+  

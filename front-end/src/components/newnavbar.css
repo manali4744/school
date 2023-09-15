@@ -1,0 +1,32 @@
+.nav{
+    padding: 30px;
+    background-color: rebeccapurple;
+    opacity: 0.9;
+}
+
+.nav-link{
+    text-transform: uppercase;
+    color: white;
+    font-size: medium;
+}
+
+a:hover{
+    color: gray;
+}
+
+.dropdown-menu{
+    text-transform: uppercase;
+    border: 0px;
+    font-size: larger;
+    border-radius: 0px;
+    z-index: 9000 !important;
+}
+
+.nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+  
+.dropdown-item:hover {
+    background-color: #f8f8f8; /* Change the background color on hover */
+    color: #000; /* Change the text color on hover */
+  }

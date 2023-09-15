@@ -16,4 +16,5 @@ urlpatterns = [
     path('getblog/', GetBlog.as_view(), name= 'getblog'),
     path('announcement/', AnnouncementInfo.as_view(), name='announcement'),
     path('event/', EventView.as_view(), name='event'),
+    path('fees/', FeesView.as_view(), name='fees'),
 ]

@@ -1,16 +1,10 @@
-/* .announcement{
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    width: 800px;
-    height:200px;
-    background-color: rgb(255, 255,255, 0.5);
-    border-radius: 10px;
-} */
-
 .container{
     padding: 0px;
+}
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 /* Update the announcement styling */
@@ -21,13 +15,27 @@
     width: 550px;
     background-color: white;
     opacity: 0.8;
-    border-radius: 10px;
     margin-bottom: 10px; /* Add margin to create spacing between announcements */
     display: flex; /* Use flex to stack announcements vertically */
     flex-direction: column; /* Stack child elements vertically */
     text-transform: uppercase;
 }
 
+.row.color{
+    /* background-color: #e4e9ec; */
+    background-image: radial-gradient(white 5%, lightblue );
+}
+
+.col{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.card-img-top{
+    width: 40%;
+    margin: 0 auto;
+    align-items: center;
+}
 
 .item{
     display: flex;
@@ -38,3 +46,86 @@
     right: 20px;
     bottom: 20px;
 }
+
+.card {
+    border: 0px !important;
+    width: 20erm !important;
+}
+
+.btn {
+    border-radius: 0px !important;
+    padding: 14px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+}
+.card-text{
+    margin-top: 10px !important;
+    font-size: medium !important;
+    margin-bottom: 50px !important;
+}
+
+.home-h1 {
+    color: rebeccapurple;
+    text-transform: capitalize;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    font-size: 70px;
+
+}
+
+.home-p {
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.event{
+    font-size: 60px;
+    color: rebeccapurple;
+    text-transform: capitalize;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: start;
+}
+
+
+.col.calendar {
+    padding: 10px;
+}
+.container.event {
+    display: flex; /* Use flexbox to arrange items */
+    justify-content: space-between; /* Put items at the start and end */
+    align-items: center; /* Vertically center items */
+    margin-top: 0px !important;
+}
+
+.item-end a{
+    text-decoration: none;
+    color: white;
+}
+
+.table{
+    margin-top: 20px;
+    border-bottom: 1px;
+}
+
+.table thead{
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.table td{
+    border-bottom: 1px solid #dee2e6 !important;
+}
+/* .data-animation{
+    position: relative;
+    animation-name: example;
+    animation-duration: 5s;
+}
+
+@keyframes example {
+    75%  {left:50px; top:50px;}
+    100% {left:0px; top:0px;}
+  } */

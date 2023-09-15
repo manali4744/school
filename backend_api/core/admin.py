@@ -8,6 +8,7 @@ admin.site.register(Subject)
 admin.site.register(class_subject)
 admin.site.register(Blog)
 admin.site.register(Event)
+admin.site.register(Fee)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('email','name','gender','is_active','is_valid','is_admin','division')
