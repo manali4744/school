@@ -146,6 +146,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "First Name should contain only letters";
+                    }
+                  }}
                 />
                 <Field
                   component={TextField}
@@ -154,6 +159,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "Last Name should contain only letters";
+                    }
+                  }}
                 />
                 <Field
                   component={TextField}
@@ -162,6 +172,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "Father Name should contain only letters";
+                    }
+                  }}
                 />
                 <Field
                   component={TextField}
@@ -170,6 +185,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "Mother Name should contain only letters";
+                    }
+                  }}
                 />
                 <Field
                 component={TextField}
@@ -260,6 +280,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "City should contain only letters";
+                    }
+                  }}
                 />
                  <Field
                   component={TextField}
@@ -268,6 +293,11 @@ function AdmissionForm() {
                   required
                   fullWidth
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Za-z]+$/i.test(value)) {
+                      return "Country should contain only letters";
+                    }
+                  }}
                 />
                 <Button
                   variant="contained"
@@ -325,6 +355,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^(A|B|AB|O)[+-]$/i.test(value)){
+                        return "Invalid blood group format";
+                    }
+                  }}
                 />
 
                 <Button
@@ -340,7 +375,7 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
-                  disabled = {!values.phonenumber || !values.emailaddress || !values.bloodgroup || values.phonenumber.toString().length !== 10}
+                  disabled = {!values.phonenumber || !values.emailaddress || !values.bloodgroup || values.phonenumber.toString().length !== 10 || !/^(A|B|AB|O)[+-]$/i.test(values.bloodgroup)}
                 >
                   Next
                 </Button>
