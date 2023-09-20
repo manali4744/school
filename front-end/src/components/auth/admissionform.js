@@ -8,6 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const initialValues = {
   firstName: "",
@@ -46,7 +48,6 @@ function AdmissionForm() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     if (isLastStep()) {
-      setCompleted(true);
       console.log("Form submitted with values:", values);
 
       
@@ -78,10 +79,33 @@ function AdmissionForm() {
             'Content-Type': 'multipart/form-data',
           },
         });
+        if(response.data.status===201){
+          html2canvas(document.querySelector("#admissionformpdf")).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            const pdf = new jsPDF({
+              orientation: 'portrait',
+              unit: 'pt',
+              format: [612, 792]
+            });
+            pdf.internal.scaleFactor = 1;
+            const imgProps= pdf.getImageProperties(imgData);
+            const imgWidth = canvas.width;
+            const imgHeight = canvas.height;
+            const marginLeft = 80; // Adjust this value as needed
+            const imgX = (pdf.internal.pageSize.getWidth() - imgWidth) / 2 + marginLeft;    
+            const imgY = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
 
-        console.log('API response:', response.data.data);
-        console.log(response.data.error);
+            pdf.addImage(imgData, 'PNG', imgX, imgY);
+            // pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save('admission_form.pdf');
+          });
+
+          setCompleted(true);
+        }
+        // console.log('API response:', response.data.data);
+        // console.log(response.data.error);
       } catch (error) {
+        alert(error.response.data)
         console.log(error.response.data);
       }
     } else {
@@ -91,8 +115,13 @@ function AdmissionForm() {
     setSubmitting(false);
   };
 
+  const getCurrentYear = () => {
+    return new Date().getFullYear();
+  };
+
   return (
     <div className="container justify-content-center">
+      <h1 className="text-center"> Addmission Form</h1>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label, index) => (
           <Step key={label} completed={completed || index < activeStep}>
@@ -152,6 +181,13 @@ function AdmissionForm() {
                 InputLabelProps={{
                     shrink: true, // This makes the label shrink when you select a date
                 }}
+                validate={(value) => {
+                  const birthYear = new Date(value).getFullYear();
+                  const currentYear = getCurrentYear();
+                  if (birthYear >= currentYear - 4) {
+                    return `Birth year should be less than ${currentYear - 4}`;
+                  }
+                }}
                 />
                 <Field name="gender" required>
                 {({ field }) => (
@@ -202,6 +238,21 @@ function AdmissionForm() {
                   required
                   style={{ marginBottom: "20px"}}
                 />
+                <Field
+                  component={TextField}
+                  name="zipcode"
+                  label="Zipcode"
+                  type="number"
+                  required
+                  fullWidth
+                  style={{ marginBottom: "20px"}}
+                  InputLabelProps={{ shrink: true }}
+                  validate={(value) => {
+                    if (!value || value.toString().length !== 6) {
+                      return "Zipcode must be exactly 6 characters.";
+                    }
+                  }}
+                />
                  <Field
                   component={TextField}
                   name="city"
@@ -218,16 +269,6 @@ function AdmissionForm() {
                   fullWidth
                   style={{ marginBottom: "20px"}}
                 />
-                 <Field
-                  component={TextField}
-                  name="zipcode"
-                  label="Zipcode"
-                  type="number"
-                  required
-                  fullWidth
-                  style={{ marginBottom: "20px"}}
-                  InputLabelProps={{ shrink: true }}
-                />
                 <Button
                   variant="contained"
                   color="primary"
@@ -240,7 +281,7 @@ function AdmissionForm() {
                 <Button
                   variant="contained"
                   color="primary"
-                  disabled = {!values.address || !values.city || !values.country || !values.zipcode}
+                  disabled = {!values.address || !values.city || !values.country || !values.zipcode || values.zipcode.toString().length !== 6}
                   onClick={handleNext}
                 >
                   Next
@@ -258,6 +299,11 @@ function AdmissionForm() {
                   required
                   style={{ marginBottom: "20px"}}
                   InputLabelProps={{ shrink: true }}
+                  validate={(value) => {
+                    if (!value || value.toString().length !== 10) {
+                      return "Enter valid phonenumber";
+                    }
+                  }}
                 />
                  <Field
                   component={TextField}
@@ -266,6 +312,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)){
+                        return "Enter a valid email address";
+                    }
+                  }}
                 />
                  <Field
                   component={TextField}
@@ -280,7 +331,6 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleBack}
-                  disabled = {!values.phonenumber || !values.emailaddress || !values.bloodgroup}
                   style={{ marginRight: "20px" }}
                 >
                   Back
@@ -290,6 +340,7 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
+                  disabled = {!values.phonenumber || !values.emailaddress || !values.bloodgroup || values.phonenumber.toString().length !== 10}
                 >
                   Next
                 </Button>
@@ -339,63 +390,82 @@ function AdmissionForm() {
                 ) : (
                   // Review step
                   <div className="container justify-content-center">
-                    <p>Review your information:</p>
-                    <div style={{border: "1px solid gray", padding: "10px", marginBottom: "10px"}}>
-                        <div>
-                        <strong>First Name:</strong> {values.firstName}
+                    <p className="text-center">Review your information:</p>
+                    <div style={{border: "1px solid gray", padding: "10px", marginBottom: "10px"}} id = "admissionformpdf">
+                      <div class="card" style={{width: "100%"}}>
+                          <div class="card-header">
+                          Admission Form Details
+                          </div>
+                          <table class="table">
+                          <tbody>
+                          <tr>
+                              <td>First Name:</td>
+                              <td>{values.firstName}</td>
+                          </tr>
+                          <tr>
+                              <td>Last Name:</td>
+                              <td>{values.lastName}</td>
+                          </tr>
+                          <tr>
+                              <td>Father Name:</td>
+                              <td>{values.father_name}</td>
+                          </tr>
+                          <tr>
+                              <td>Mother Name:</td>
+                              <td>{values.mother_name}</td>
+                          </tr>
+                          <tr>
+                              <td>Birthdate:</td>
+                              <td>{values.birthdate}</td>
+                          </tr>
+                          <tr>
+                              <td>Gender:</td>
+                              <td>{values.gender}</td>
+                          </tr>
+                          <tr>
+                              <td>Address:</td>
+                              <td>{values.address}</td>
+                          </tr>
+                          <tr>
+                              <td>City:</td>
+                              <td>{values.city}</td>
+                          </tr>
+                          <tr>
+                              <td>Country:</td>
+                              <td>{values.country}</td>
+                          </tr>
+                          <tr>
+                              <td>Zipcode:</td>
+                              <td>{values.zipcode}</td>
+                          </tr>
+                          <tr>
+                              <td>Phone Number:</td>
+                              <td>{values.phonenumber}</td>
+                          </tr>
+                          <tr>
+                              <td>Email Address::</td>
+                              <td>{values.emailaddress}</td>
+                          </tr>
+                          <tr>
+                              <td>Blood Group:</td>
+                              <td>{values.bloodgroup}</td>
+                          </tr>
+                          </tbody>
+                          </table>
                         </div>
-
-                        <div>
-                        <strong>Last Name:</strong> {values.lastName}
-                        </div>
-
-                        <div>
-                        <strong>Father Name:</strong> {values.father_name}
-                        </div>
-
-                        <div>
-                        <strong>Mother Name:</strong> {values.mother_name}
-                        </div>
-
-                        <div>
-                        <strong>Birthdate:</strong> {values.birthdate}
-                        </div>
-
-                        <div>
-                        <strong>Gender:</strong> {values.gender}
-                        </div>
-
-                        <div>
-                        <strong>Address:</strong> {values.address}
-                        </div>
-
-                        <div>
-                        <strong>City:</strong> {values.city}
-                        </div>
-
-                        <div>
-                        <strong>Country:</strong> {values.country}
-                        </div>
-                        <div>
-                        <strong>Zipcode:</strong> {values.zipcode}
-                        </div>
-                        <div>
-                        <strong>Phone Number:</strong> {values.phonenumber}
-                        </div>
-                        <div>
-                        <strong>Email Address:</strong> {values.emailaddress}
-                        </div>
-                        <div>
-                        <strong>Blood Group:</strong> {values.bloodgroup}
-                        </div>
-                        {/* <div>
-                          <strong>Student Photo:</strong>
-                          {values.studentphoto ? (
-                            <img src={values.studentphoto} alt="Student Photo" style={{ maxWidth: "200px" }} />
-                          ) : (
-                            "No photo provided"
-                          )}
-                        </div> */}
+                        <table className="table">
+                          <tbody>
+                            <tr>
+                              <td style={{textAlign:"justify", textAlignLast:"auto"}}>We greatly appreciate your diligence in submitting accurate and verified information.
+                              Ensuring that the details you provide are both precise and complete is vital to
+                              guarantee a timely and efficient response to your request. By submitting 
+                              this form after verifying the accuracy of your information, 
+                              you help us better serve your needs. Please review the details 
+                              you have provided and inform us immediately of any discrepancies. Your commitment 
+                              to the accuracy of your submission is invaluable in our efforts to provide you with the best possible service.</td>
+                            </tr>
+                          </tbody>
+                        </table>
                     </div>
                     <div>
                     <Button

@@ -55,6 +55,13 @@ function Home() {
 
     return (
         <>
+      {/* <div data-pl-agent-id="cb1450253774255035123" data-pl-mode="modal" data-pl-position="br" data-pl-trigger="button" style={{display: "none"}}></div>
+        <iframe
+            src="https://embed.pagelines.com/agent/cb1450253774255035123"
+            width="100%"
+            height="700"
+            frameborder="0"
+        ></iframe> */}
         <div>
             <div className="container-fluid">
                 <img src="http://127.0.0.1:3000/img/graduate.avif" alt="" style={{width: "50%", height: "90%"}}/>

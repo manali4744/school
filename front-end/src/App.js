@@ -11,7 +11,6 @@ import Navbar from './components/newnavbar';
 import Footer from './components/footer';
 import Enrollment from './components/auth/enrollments';
 import AboutUs from './components/auth/aboutus';
-import Enroll from './components/auth/enroll';
 import AdmissionForm from './components/auth/admissionform';
 
 
@@ -31,7 +30,6 @@ function App() {
           <Route path="/nav" element={<Navbar/>}/>
           <Route path="/enrollment" element={<Enrollment/>}/>
           <Route path="/aboutus" element={<AboutUs/>}/>
-          <Route path="/enroll" element={<Enroll/>}/>
           <Route path="/admissionform" element={<AdmissionForm/>}/>  
         </Routes>
         <Footer/>

@@ -176,7 +176,7 @@ class AdmissionForm(APIView):
         serializer = AdmissionFormSerializers(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"data":serializer.data}, status=status.HTTP_201_CREATED)
+            return Response({"data":serializer.data, "status":status.HTTP_201_CREATED}, status=status.HTTP_201_CREATED)
         if 'non_field_errors' in serializer.errors and len(serializer.errors['non_field_errors']) > 0:
             return Response({'detail': serializer.errors['non_field_errors'][0]}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
