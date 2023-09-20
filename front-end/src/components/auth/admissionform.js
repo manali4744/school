@@ -115,6 +115,7 @@ function AdmissionForm() {
                   name="firstName"
                   label="First Name"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                 <Field
@@ -122,6 +123,7 @@ function AdmissionForm() {
                   name="lastName"
                   label="Last Name"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                 <Field
@@ -129,6 +131,7 @@ function AdmissionForm() {
                   name="father_name"
                   label="Father Name"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                 <Field
@@ -136,6 +139,7 @@ function AdmissionForm() {
                   name="mother_name"
                   label="Mother Name"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                 <Field
@@ -144,11 +148,12 @@ function AdmissionForm() {
                 label="Date of Birth"
                 type="date" // Set the input type to 'date'
                 fullWidth
+                required
                 InputLabelProps={{
                     shrink: true, // This makes the label shrink when you select a date
                 }}
                 />
-                <Field name="gender">
+                <Field name="gender" required>
                 {({ field }) => (
                     <FormControl fullWidth margin="normal">
                     <FormLabel
@@ -180,6 +185,7 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
+                  disabled={!values.firstName || !values.lastName || !values.father_name || !values.mother_name || !values.birthdate || !values.gender}
                 >
                   Next
                 </Button>
@@ -193,6 +199,7 @@ function AdmissionForm() {
                   name="address"
                   label="Address"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                  <Field
@@ -200,12 +207,14 @@ function AdmissionForm() {
                   name="city"
                   label="City"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                  <Field
                   component={TextField}
                   name="country"
                   label="Country"
+                  required
                   fullWidth
                   style={{ marginBottom: "20px"}}
                 />
@@ -214,6 +223,7 @@ function AdmissionForm() {
                   name="zipcode"
                   label="Zipcode"
                   type="number"
+                  required
                   fullWidth
                   style={{ marginBottom: "20px"}}
                   InputLabelProps={{ shrink: true }}
@@ -230,6 +240,7 @@ function AdmissionForm() {
                 <Button
                   variant="contained"
                   color="primary"
+                  disabled = {!values.address || !values.city || !values.country || !values.zipcode}
                   onClick={handleNext}
                 >
                   Next
@@ -244,6 +255,7 @@ function AdmissionForm() {
                   label="Phone Number"
                   type= "number"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                   InputLabelProps={{ shrink: true }}
                 />
@@ -252,6 +264,7 @@ function AdmissionForm() {
                   name="emailaddress"
                   label="Email Address"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
                  <Field
@@ -259,6 +272,7 @@ function AdmissionForm() {
                   name="bloodgroup"
                   label="Blood Group"
                   fullWidth
+                  required
                   style={{ marginBottom: "20px"}}
                 />
 
@@ -266,6 +280,7 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleBack}
+                  disabled = {!values.phonenumber || !values.emailaddress || !values.bloodgroup}
                   style={{ marginRight: "20px" }}
                 >
                   Back
@@ -372,9 +387,6 @@ function AdmissionForm() {
                         </div>
                         <div>
                         <strong>Blood Group:</strong> {values.bloodgroup}
-                        </div>
-                        <div>
-                        <strong>Student Photo:</strong> {values.studentphoto}
                         </div>
                         {/* <div>
                           <strong>Student Photo:</strong>
