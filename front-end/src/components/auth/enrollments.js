@@ -1,6 +1,7 @@
 import './enrollment.css'
 import { Button, Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 function Enrollment() {
@@ -9,12 +10,16 @@ function Enrollment() {
     const handleShow = () => setShow(true);
 
     const  [feesdata, setFeesdata] = useState([]);
+    const [admission, setAdmission] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/fees/');
                 setFeesdata(response.data.fees)
+                setAdmission(response.data.is_admission)
+                localStorage.setItem('admissionID', response.data.is_admission);
+                console.log(typeof(response.data.is_admission))
             } catch (error) {
                 console.log("Error:", error)
             }
@@ -58,6 +63,13 @@ function Enrollment() {
                     Parents complete the application form with accurate information.
                     </li>
                 </ul>
+                {admission && (
+                    <Link to="/admissionform">
+                        <Button variant="primary" onClick={handleShow}>
+                            Enrollment
+                        </Button>
+                    </Link>
+                )}
                 </div>
             </div>
         </div>

@@ -3,14 +3,16 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
-                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer)
+                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer, AdmissionFormSerializers)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
-from .models import User, Result, SubGrade, Blog, Announcement, Event, Fee
+from .models import (User, Result, SubGrade, Blog, Announcement, Event, 
+                    Fee, Admission)
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
+import datetime
 
 # Create your views here.
 
@@ -129,7 +131,8 @@ class ResultInfo(APIView):
             user = User.objects.get(id=request.user.id)
             user_info = UserInfoSerializer(user)
             return Response({'User': user_info.data})
-        
+
+
 class GetBlog(APIView):
     
     def get(self, request):
@@ -152,10 +155,28 @@ class EventView(APIView):
         events = Event.objects.all()
         serializer = EventSerializer(events, many = True)
         return Response({'event': serializer.data, 'status': status.HTTP_200_OK})
+   
     
 class FeesView(APIView):
 
     def get(self, request):
         fees = Fee.objects.all()
+        current_year = datetime.datetime.now().year
+        admission = Admission.objects.get(admission_open_date__year=current_year)    
         serializer = FeeSerializer(fees, many=True)
-        return Response({'fees': serializer.data, 'status': status.HTTP_200_OK})
+        return Response({'fees': serializer.data, 'status': status.HTTP_200_OK, 'is_admission': admission.admission})
+
+
+class AdmissionForm(APIView):
+    
+    def post(self, request, format=None):
+        data= request.data
+        print(data)
+        # data = json.loads(request.body.decode('utf-8'))
+        serializer = AdmissionFormSerializers(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"data":serializer.data}, status=status.HTTP_201_CREATED)
+        if 'non_field_errors' in serializer.errors and len(serializer.errors['non_field_errors']) > 0:
+            return Response({'detail': serializer.errors['non_field_errors'][0]}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

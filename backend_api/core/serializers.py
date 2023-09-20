@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import authenticate
-from .models import User, SubGrade, Subject, Blog, Announcement, Event, Fee
+from .models import User, SubGrade, Subject, Blog, Announcement, Event, Fee, AdmissionForm, Admission
+import datetime
 
 class UserRegistrationSerializers(serializers.ModelSerializer):
     # card_details = AddcardSerializer(many=True,read_only=True)
@@ -15,9 +17,20 @@ class UserRegistrationSerializers(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+    def validate_name(self, value):
+        """
+        Custom validation for the 'name' field.
+        Ensures that the 'name' field contains only characters (letters).
+        """
+        if not value.isalpha():
+            raise serializers.ValidationError("Name should contain only letters (characters).")
+        return value
+
     def validate(self, attrs):
         password = attrs.get('password')
         password2 = attrs.get('password2')
+        if len(password2) < 8:
+            raise serializers.ValidationError("Length of password should be 8 characters or more")
         if password != password2:
             raise serializers.ValidationError("Password and Confirm Password does not match")
         return attrs
@@ -100,3 +113,62 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         fields = '__all__'
+
+
+class AdmissionFormSerializers(serializers.ModelSerializer):
+    zipcode = serializers.IntegerField(
+        validators=[
+            MinValueValidator(100000, message="Enter a valid zipcode."),
+            MaxValueValidator(999999, message="Enter a valid zipcode.")
+        ]
+    )
+    phonenumber = serializers.IntegerField(
+        validators=[
+            MinValueValidator(1000000000, message="Enter valid phonenumber."),
+            MaxValueValidator(9999999999, message="Enter valid phonenumber.")
+        ]
+    )
+    class Meta:
+        model = AdmissionForm
+        fields = '__all__'
+        extra_kwargs = {
+            'firstName': {'required': True},
+            'lastName': {'required': True},
+            'father_name': {'required': True},
+            'mother_name': {'required': True},
+            'birthdate': {'required': True},
+            'gender': {'required': True},
+            'address': {'required': True},
+            'city': {'required': True},
+            'country': {'required': True},
+            'zipcode': {'required': True},
+            'phonenumber': {'required': True},
+            'emailaddress': {'required': True},
+            'bloodgroup': {'required': True},
+            'studentphoto': {'required': True},
+        }
+
+    
+    def create(self, validated_data):
+
+        # Get or create a matching admission record for the current year
+        current_year = datetime.date.today().year
+        matching_admission, _ = Admission.objects.get_or_create(
+            admission_open_date__year=current_year,
+            admission=True
+        )
+        
+        # Set the admission_year field to the matching admission record
+        validated_data['admission_year'] = matching_admission
+
+        if AdmissionForm.objects.filter(
+            firstName=validated_data['firstName'],
+            father_name=validated_data['father_name'],
+            lastName=validated_data['lastName'],
+            emailaddress=validated_data['emailaddress']
+        ).exists():
+            # Raise a validation error with a custom message
+            raise serializers.ValidationError({
+                'non_field_errors': ["A record with the same combination of firstName, father_name, lastName, and emailaddress already exists."]
+            })
+        return AdmissionForm.objects.create(**validated_data)

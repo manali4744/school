@@ -129,8 +129,26 @@ function Register() {
         console.log(response.data)
       }
     } catch (error) {
-      console.error('API Error:', error.response.data.email);
-      alert(error.response.data.email)
+      console.error('API Error:', error.response.data);
+      // alert(error.response.data.Object[0])
+
+      if (error.response && error.response.data) {
+        // Check if the error response has an array
+        if (Array.isArray(error.response.data)) {
+          // Display the array of error messages as is
+          alert(`${error.response.data.join(', ')}`);
+        } else if (typeof error.response.data === 'object') {
+          // If it's an object, display only the error messages without field names
+          const errorMessages = Object.values(error.response.data).flat();
+          alert(`${errorMessages.join(', ')}`);
+        } else {
+          // If it's not an array or an object, display the error response as is
+          alert(`${JSON.stringify(error.response.data)}`);
+        }
+      } else {
+        // Handle other types of errors
+        alert('An error occurred.');
+      }
     }
   };
 

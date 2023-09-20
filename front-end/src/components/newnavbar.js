@@ -9,12 +9,8 @@ function Navbar() {
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">HOME</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">ABOUT</a>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">ABOUT US</a></li>
-            <li><a class="dropdown-item" href="#">DATA PRIVACY</a></li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/aboutus">About</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">SERVICES</a>

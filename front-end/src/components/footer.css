@@ -1,11 +1,12 @@
 footer {
     text-align: center;
     padding: 3px;
-    background-color:  #e8e9ea;
+    background-image:radial-gradient(white 5%, lightblue ) !important;
     color: black;
-    /* position: fixed; */
+    position: relative;
     bottom: 0;
     width: 100%;
+    margin-top: auto;
     margin-bottom: 20px;
     padding: 30px;
 }

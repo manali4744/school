@@ -66,7 +66,7 @@ function Home() {
                             <img src="http://127.0.0.1:3000/img/academic_programming.png" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Academic <br/>Programming</h5>
-                                <p class="card-text">Hope Academy offers a comprehensive curriculum aligned <br/>with Connecticut State Standards. </p>
+                                <p class="card-text">Our Academy offers a comprehensive curriculum aligned <br/>with Connecticut State Standards. </p>
                                 <a href="#" class="btn btn-primary">Learn more</a>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ function Home() {
                             <img src="http://127.0.0.1:3000/img/therapeutic_Approch.png" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Therapeutic<br/>Approach </h5>
-                                <p class="card-text">Our Therapeutic Approach is what makes Hope Academy a <br/>truly unique school environment for our students.</p>
+                                <p class="card-text">Our Therapeutic Approach is what makes Academy a <br/>truly unique school environment for our students.</p>
                                 <a href="#" class="btn btn-primary">Learn more</a>
                             </div>
                         </div>

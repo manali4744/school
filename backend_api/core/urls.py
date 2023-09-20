@@ -17,4 +17,5 @@ urlpatterns = [
     path('announcement/', AnnouncementInfo.as_view(), name='announcement'),
     path('event/', EventView.as_view(), name='event'),
     path('fees/', FeesView.as_view(), name='fees'),
+    path('admissionform/', AdmissionForm.as_view(), name="admissionform")
 ]

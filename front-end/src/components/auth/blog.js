@@ -1,10 +1,4 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import './blog.css'
@@ -31,7 +25,7 @@ function Blog() {
                 <div className='container' key={index}>
                         <div className="column">
                             <div className="">
-                                <img src={`http://127.0.0.1:8000${blogEntry.blog_img}`} alt="Subject Image" style={{height: "450px", marginTop: "50px", maxWidth: "1000px"}}/>
+                                <img src={`http://127.0.0.1:8000${blogEntry.blog_img}`} style={{height: "450px", marginTop: "50px", maxWidth: "1000px"}}/>
                             </div>
                             <div className="">
                                 <h2 className='subject-title'>{blogEntry.title}</h2>

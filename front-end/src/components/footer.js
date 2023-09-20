@@ -5,8 +5,9 @@ function Footer() {
     return (
         <footer>
         <p>Contact Us</p>
-        <p>89 Marsh Hill Road<br/>
-        Orange, CT 06477 
+        <p>305, Sumerru Business Corner,<br/>
+        Near Rajhans Multiplex, Pal RTO,<br/>
+        Surat, Gujarat - 395009
         </p>
       </footer>
     )

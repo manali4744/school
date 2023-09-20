@@ -4,6 +4,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.validators import EmailValidator, RegexValidator, MaxValueValidator, MinValueValidator
 from django.apps import apps
 from django.core.exceptions import ValidationError
+import datetime
 
 # Create your models here.
 Division = (
@@ -176,6 +177,81 @@ class Fee(models.Model):
     # Calculate the total fee by adding all fee components
         total_fee = self.academic_fee + self.lunch_fee + self.co_curricular_fee + self.transport_fee
         return total_fee
+    
+
+class Admission(models.Model):
+    admission_open_date = models.DateField(null=False,blank=False)
+    admission_close_date = models.DateField(null=False, blank=False)
+    admission = models.BooleanField(default=True)
+    
+    def clean(self):
+        # Check if there is already an admission entry for the current year
+        current_year = self.admission_open_date.year
+        existing_admission = Admission.objects.filter(admission_open_date__year=current_year)
+
+        if self.pk:  # Exclude the current instance if it's being updated
+            existing_admission = existing_admission.exclude(pk=self.pk)
+
+        if existing_admission.exists():
+            raise ValidationError('An admission entry for the current year already exists.')
+        
+    def __str__(self):
+        return f"Year {self.admission_open_date.year}-{int(self.admission_open_date.year)+1}"
+    
+
+class AdmissionForm(models.Model):
+    admission_year = models.ForeignKey(Admission, on_delete=models.PROTECT, default=None, blank=True, null=True)
+    gender_choice = [
+        ('Male','Male'),
+        ('Female','Female'),
+    ]
+    firstName = models.CharField(null=False, blank=False)
+    lastName = models.CharField(null=False, blank=False)
+    father_name = models.CharField(null=False, blank=False)
+    mother_name = models.CharField(null=False, blank=False)
+    birthdate = models.DateField(null=False, blank=False)
+    gender = models.CharField(choices=gender_choice)
+    address = models.CharField(null=False, blank=False)
+    city = models.CharField(null=False, blank=False)
+    country = models.CharField(null=False, blank=False)
+    zipcode = models.PositiveBigIntegerField(validators=[MinValueValidator(100000, message="Enter valid zipcode"), MaxValueValidator(999999, message="Enter valid zipcode")])
+    phonenumber = models.PositiveBigIntegerField(validators=[MinValueValidator(1000000000, message="Enter valid phonenumber"), MaxValueValidator(9999999999, message="Enter valid phonenumber")])
+    emailaddress = models.EmailField(null=True, blank=True)
+    bloodgroup = models.CharField(null=True, blank=True)
+    studentphoto = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return self.emailaddress
+    
+    class Meta:
+        unique_together = ['firstName', 'father_name', 'lastName', 'emailaddress']
+
+    def save(self, *args, **kwargs):
+
+    # Check if admission is True and find a matching admission record for the current year
+        if self.admission_year:
+            current_year =  datetime.date.today().year
+            print(current_year)
+            matching_admission = Admission.objects.filter(
+                admission_open_date__year=current_year,
+                admission=True
+            ).first()
+            print(matching_admission)
+            if matching_admission:
+                self.admission_year = matching_admission
+
+        super().save(*args, **kwargs)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
