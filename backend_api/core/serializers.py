@@ -83,6 +83,14 @@ class UserInfoSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'name', 'gender', 'division', 'Standards']
 
+
+class UserRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        # fields = '__all__'
+        exclude = ('password',)
+
 class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:

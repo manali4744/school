@@ -57,6 +57,8 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_valid = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     division = models.CharField(choices=Division, max_length=255)

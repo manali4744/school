@@ -30,6 +30,8 @@ const initialValues = {
 const formData = new FormData();
 
 function AdmissionForm() {
+
+  
   const [activeStep, setActiveStep] = useState(0);
   const steps = ["Student Info", "Address", "Contact", "Other", "Review&Submit"];
   const [completed, setCompleted] = useState(false);
@@ -37,6 +39,7 @@ function AdmissionForm() {
   const isLastStep = () => {
     return activeStep === steps.length - 1;
   };
+
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -149,6 +152,9 @@ function AdmissionForm() {
                   validate={(value) => {
                     if (!/^[A-Za-z]+$/i.test(value)) {
                       return "First Name should contain only letters";
+                    } else if (value.length<2){
+                      return "Names typically consist of more than one letter."
+
                     }
                   }}
                 />
@@ -162,6 +168,8 @@ function AdmissionForm() {
                   validate={(value) => {
                     if (!/^[A-Za-z]+$/i.test(value)) {
                       return "Last Name should contain only letters";
+                    } else if (value.length<2){
+                      return "Names typically consist of more than one letter."
                     }
                   }}
                 />
@@ -175,6 +183,8 @@ function AdmissionForm() {
                   validate={(value) => {
                     if (!/^[A-Za-z]+$/i.test(value)) {
                       return "Father Name should contain only letters";
+                    }else if (value.length<2){
+                      return "Names typically consist of more than one letter."
                     }
                   }}
                 />
@@ -188,6 +198,8 @@ function AdmissionForm() {
                   validate={(value) => {
                     if (!/^[A-Za-z]+$/i.test(value)) {
                       return "Mother Name should contain only letters";
+                    } else if (value.length<2){
+                      return "Names typically consist of more than one letter.";
                     }
                   }}
                 />
@@ -257,6 +269,11 @@ function AdmissionForm() {
                   fullWidth
                   required
                   style={{ marginBottom: "20px"}}
+                  validate={(value) => {
+                    if (value.length<5){
+                      return "Address typically consist of more than Five letter."
+                    }
+                  }}
                 />
                 <Field
                   component={TextField}
@@ -283,7 +300,7 @@ function AdmissionForm() {
                   validate={(value) => {
                     if (!/^[A-Za-z]+$/i.test(value)) {
                       return "City should contain only letters";
-                    }
+                    } 
                   }}
                 />
                  <Field
@@ -389,10 +406,21 @@ function AdmissionForm() {
                 type="file"
                 name="studentphoto"
                 label="Student Image"
-                accept="image/*" // Allow only image files
+                accept=".jpg, .jpeg, .png"
                 onChange={(e) => {
                   const selectedFile = e.target.files[0];
-                  formData.append('studentphoto', selectedFile);
+                  // formData.append('studentphoto', selectedFile);
+
+                  if (selectedFile) {
+                    const fileName = selectedFile.name.toLowerCase();
+                    if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) {
+                      formData.append('studentphoto', selectedFile);
+                    } else {
+                      // Invalid file selected, you can show an error message or handle it as needed
+                      alert('Please select a valid .jpg, .jpeg, or .png file.');
+                      e.target.value = ''; // Clear the file input to allow selecting another file
+                    }
+                  }
                 }}
                 fullWidth
                 style={{ marginBottom: "20px"}}
@@ -411,6 +439,8 @@ function AdmissionForm() {
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
+                  // onClick={handleNext}
+                  // disabled={!isValidFile}
                 >
                   Next
                 </Button>

@@ -3,16 +3,19 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
-                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer, AdmissionFormSerializers)
+                        UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer, 
+                        AdmissionFormSerializers, UserRequestSerializer)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
 from .models import (User, Result, SubGrade, Blog, Announcement, Event, 
-                    Fee, Admission)
+                    Fee, Admission, AdmissionForm)
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
 import datetime
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -50,6 +53,10 @@ class UserLoginView(APIView):
                 jwt_token = get_tokens_for_user(user)
                 print(jwt_token['access'])
                 user_data = User.objects.get(id=user.id)
+                print(user_data.is_admin)
+                if user_data.is_admin:
+                    print("here")
+                    return Response({'msg': 'Login Success of admin', 'status': status.HTTP_200_OK, 'id': user.id, 'auth_access': jwt_token['access'], 'admin':user_data.is_admin}, status=status.HTTP_200_OK)
                 user_info = UserInfoSerializer(user_data)
                 collected_info = False
                 if user_info.data['gender'] is not None and user_info.data['division'] is not None and  user_info.data['Standards'] is not None:
@@ -76,7 +83,6 @@ class UserInformation(APIView):
         print(serializer)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            
             return Response({'msg': 'Success', 'status': status.HTTP_200_OK, 'id': user.id}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'error', 'status': status.HTTP_400_BAD_REQUEST},
@@ -167,7 +173,12 @@ class FeesView(APIView):
         return Response({'fees': serializer.data, 'status': status.HTTP_200_OK, 'is_admission': admission.admission})
 
 
-class AdmissionForm(APIView):
+class AdmissionFormView(APIView):
+    
+    def get(self, request, format=None):
+        data = AdmissionForm.objects.all()
+        serializer = AdmissionFormSerializers(data, many=True)
+        return Response({'data': serializer.data, "status":status.HTTP_200_OK})
     
     def post(self, request, format=None):
         data= request.data
@@ -180,3 +191,37 @@ class AdmissionForm(APIView):
         if 'non_field_errors' in serializer.errors and len(serializer.errors['non_field_errors']) > 0:
             return Response({'detail': serializer.errors['non_field_errors'][0]}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class RequestApproveView(APIView):
+
+    def get(self, request, id=None, role=None, format=None):
+        if id is None and role is None:
+            data = User.objects.filter(~Q(is_teacher=True) & ~Q(is_student=True))
+            print(data)
+            serializer = UserRequestSerializer(data, many=True)
+            return Response({"data" : serializer.data}, status=status.HTTP_200_OK)
+        elif id is None and role is not None:
+            if role == 'teacher':
+                data = User.objects.filter(is_teacher=True)
+                serializer = UserRequestSerializer(data, many= True)
+                return Response({"data" : serializer.data}, status=status.HTTP_200_OK)
+            if role == 'student':
+                data = User.objects.filter(is_student=True)
+                serializer = UserRequestSerializer(data, many= True)
+                return Response({"data" : serializer.data}, status=status.HTTP_200_OK)
+        else:
+            user = get_object_or_404(User, pk=id)
+            if role == 'teacher':
+                user.is_teacher = True
+                user.save()
+            if role == 'student':
+                user.is_student = True
+                user.save()
+            serializer = UserRequestSerializer(user)
+            return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
+
+
+    
+

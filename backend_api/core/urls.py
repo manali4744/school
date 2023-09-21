@@ -17,5 +17,9 @@ urlpatterns = [
     path('announcement/', AnnouncementInfo.as_view(), name='announcement'),
     path('event/', EventView.as_view(), name='event'),
     path('fees/', FeesView.as_view(), name='fees'),
-    path('admissionform/', AdmissionForm.as_view(), name="admissionform")
+    path('admissionform/', AdmissionFormView.as_view(), name="admissionform"),
+    path('requestapprove/', RequestApproveView.as_view(), name="requestapprove"),
+    path('requestapprove/<int:id>/<str:role>/', RequestApproveView.as_view(), name="requestapprove"),
+    path('requestapprove/<str:role>/', RequestApproveView.as_view(), name="requestapprove"),
+
 ]
