@@ -7,6 +7,7 @@ import RequestApprove from './components/requestapprove';
 import Student from './components/student';
 import Staff from './components/staff';
 import AdmissionFormDetails from './components/admissionform';
+import AdmissionMoreInfo from './components/admissionmoreinfo';
 
 
 function App() {
@@ -42,6 +43,11 @@ function App() {
           <Route path='/enrollment' element={
             <Layout>
               <AdmissionFormDetails/>
+            </Layout>
+          }/>
+          <Route path='/admissionmoreinfo/:id' element={
+            <Layout>
+              <AdmissionMoreInfo/>
             </Layout>
           }/>
         </Routes>

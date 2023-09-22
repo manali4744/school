@@ -80,11 +80,12 @@ function Info() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(http://127.0.0.1:3000/img/students.avif)',
+            backgroundImage: 'url(http://127.0.0.1:3000/img/getinfo.avif)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-              backgroundSize: 'cover',
+              backgroundSize: '50% 50%',
               backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

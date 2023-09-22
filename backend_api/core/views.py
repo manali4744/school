@@ -61,7 +61,12 @@ class UserLoginView(APIView):
                 collected_info = False
                 if user_info.data['gender'] is not None and user_info.data['division'] is not None and  user_info.data['Standards'] is not None:
                     collected_info = True
+                print(collected_info)
+                # if user_data.is_student:
+                #     print("here", "i am student" )
                 return Response({'msg': 'Login Success', 'status': status.HTTP_200_OK, 'id': user.id, 'collected_info': collected_info, 'auth_access': jwt_token['access']}, status=status.HTTP_200_OK)
+                # if user_data.is_student == False:
+                #    return Response({"msg": "wait your request is not approved", 'status': status.HTTP_200_OK,}) 
             else:
                 try:
                     user_exists = User.objects.get(email=email)
@@ -175,10 +180,18 @@ class FeesView(APIView):
 
 class AdmissionFormView(APIView):
     
-    def get(self, request, format=None):
-        data = AdmissionForm.objects.all()
-        serializer = AdmissionFormSerializers(data, many=True)
-        return Response({'data': serializer.data, "status":status.HTTP_200_OK})
+    def get(self, request, id=None, format=None):
+        if id is None:
+            data = AdmissionForm.objects.all()
+            serializer = AdmissionFormSerializers(data, many=True)
+            return Response({'data': serializer.data, "status": status.HTTP_200_OK})
+        if id is not None:
+            try:
+                data = AdmissionForm.objects.get(id=id)
+                serializer = AdmissionFormSerializers(data)
+                return Response({'data': serializer.data, 'status': status.HTTP_200_OK})
+            except AdmissionForm.DoesNotExist:
+                return Response({'error': 'AdmissionForm not found', 'status': status.HTTP_404_NOT_FOUND})
     
     def post(self, request, format=None):
         data= request.data
@@ -197,7 +210,7 @@ class RequestApproveView(APIView):
 
     def get(self, request, id=None, role=None, format=None):
         if id is None and role is None:
-            data = User.objects.filter(~Q(is_teacher=True) & ~Q(is_student=True))
+            data = User.objects.filter(~Q(is_teacher=True) & ~Q(is_student=True) & ~Q(is_admin=True))
             print(data)
             serializer = UserRequestSerializer(data, many=True)
             return Response({"data" : serializer.data}, status=status.HTTP_200_OK)

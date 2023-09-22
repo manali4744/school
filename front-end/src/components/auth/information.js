@@ -39,7 +39,7 @@ function Information() {
       }
     }
     fetchData();
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="center-container">
@@ -58,7 +58,7 @@ function Information() {
               <p>Division: {user?.division}</p>
             </div>
             <div className="col">
-              <p>Email: {user?.email}</p>
+              <p className="email">Email: {user?.email}</p>
             </div>
           </div>
         </div>

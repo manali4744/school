@@ -103,6 +103,9 @@ function Login() {
           navigate('/information')
         }
         else{
+          if (response.data.admin){
+            window.location.href = 'http://localhost:3001/';
+          }
           navigate('/getinfo')
         }
       } else {
