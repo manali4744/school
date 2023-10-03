@@ -58,7 +58,7 @@ function AdmissionFormDetails() {
             </tbody>
           </table>
           <nav aria-label="Page navigation">
-            <ul className="pagination">
+            <ul className="pagination" style={{justifyContent:'center'}}>
               {Array.from({ length: totalPages }).map((_, index) => (
                 <li
                   key={index}

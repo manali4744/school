@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './event.css'
 import axios from "axios";
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 
 function Event()  {
@@ -20,18 +21,58 @@ function Event()  {
     return (
         <>
         <div>
-        <style>
-                {`
-                    body {
-                        background-image: url("http://127.0.0.1:3000/img/event_announcement.jpg");
-                        background-size: cover;
-                        height: 50vh;
-                        margin: 0;
-                        padding: 0;
-                    }
-                `}
-            </style>
+            <div className="container-fluid">
+                <img src="http://127.0.0.1:3000/img/event.avif" alt="" style={{width: "20%", height: "20%"}}/>
+            </div>
             <div className="container">
+                <h1 className="event-heading">Event Details</h1>
+            </div>
+            {eventdata.map((eventEntry, index) => (
+            <div className="container" style={{ boxShadow: '0 0 30px rgba(0,0,0,0.15)'}}>
+                <div className="row row-shadow">
+                    <div className="col-70">
+                    <div className="row-cal-white">
+                    </div>
+                    <div className="row-cal-white">
+                        <div className="overview">
+                            <div className="overviewtitle">
+                                <h4>{eventEntry.sub_title}</h4>
+                            </div>
+                            <p>{eventEntry.description}</p>
+                        </div>
+                    </div>
+                    </div>
+                    <div className="col-30">
+                        <div className="row-cal-gray">
+                            <div className="event-date">
+                            <TurnedInIcon className="icon"/>
+                                {/* <p className="event-day">3</p>
+                                <p className="event-month">oct</p>
+                                <p className="event-year">2023</p> */}
+                            </div>
+                            <h3 className="event-title">{eventEntry.title}</h3>
+                            <h4 className="event-coordinator">Coordinator</h4>
+                            <p>{eventEntry.coordinator}</p>
+                        </div>
+                        <div className="row-cal-white">
+                            <div className="details">
+                                <h4>Date</h4>
+                                <p>
+                                <span>{eventEntry.start_date}</span>
+                                <span></span>
+                                <br />
+                                <span>{eventEntry.end_date}</span>
+                                </p>
+                                <h4>Location</h4>
+                                <p>{eventEntry.GD_Room}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ))
+            }
+            {/* <div className="container">
                 {eventdata.map((eventEntry, index) => (
                     <div key={index} className="card" style={{margin:'20px'}}>
                         <div className="card-header" >{eventEntry.sub_title}</div>
@@ -39,7 +80,7 @@ function Event()  {
                             <h5 class="card-title">{eventEntry.title}</h5>
                             <div class="date-display">
                                 <span class="date start-date">Start :{eventEntry.start_date}</span><br/>
-                                <span class="date end-date">End     : {eventEntry.end_date}</span>
+                                <span class="date end-date">End     :{eventEntry.end_date}</span>
                             </div>
                             <p className="data-text">
                                 {eventEntry.description}
@@ -66,10 +107,9 @@ function Event()  {
                             </ul>
                         </div>
                     </div>
-                ))
-
+                    ))
                 }
-            </div>
+            </div> */}
         </div>
         </>
     )

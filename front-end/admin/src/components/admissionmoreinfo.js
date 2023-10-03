@@ -26,9 +26,12 @@ function AdmissionMoreInfo () {
 
     return (
         <>
-            <h1> Admission Info</h1>
+        <div className="container" style={{marginTop: '50px'}}>
+
+            <h1> {admissionmore.firstName} {admissionmore.lastName}</h1>
             <p>ID: {id}</p>
             <p>{admissionmore.bloodgroup}</p>
+        </div>
         </>
     )
 };
