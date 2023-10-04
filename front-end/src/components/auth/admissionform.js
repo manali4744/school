@@ -30,8 +30,6 @@ const initialValues = {
 const formData = new FormData();
 
 function AdmissionForm() {
-
-  
   const [activeStep, setActiveStep] = useState(0);
   const steps = ["Student Info", "Address", "Contact", "Other", "Review&Submit"];
   const [completed, setCompleted] = useState(false);
@@ -51,6 +49,7 @@ function AdmissionForm() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     if (isLastStep()) {
+
       console.log("Form submitted with values:", values);
 
       

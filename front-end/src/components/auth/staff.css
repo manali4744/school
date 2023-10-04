@@ -1,0 +1,14 @@
+.heading__staff {
+    margin-top: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Horizontally center the child */
+    align-items: center; /* Vertically center the child */
+    /* background-color: azure; */
+    background-image: linear-gradient(rgb(208, 225, 234) 1%, rgb(228, 233, 236) 10%, rgb(228, 233, 236) 90%, rgb(208, 225, 234) 100%);
+}
+
+.staff p{
+    text-align: justify !important;
+}

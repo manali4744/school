@@ -12,6 +12,7 @@ import Footer from './components/footer';
 import Enrollment from './components/auth/enrollments';
 import AboutUs from './components/auth/aboutus';
 import AdmissionForm from './components/auth/admissionform';
+import Staff from './components/auth/staff';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/enrollment" element={<Enrollment/>}/>
           <Route path="/aboutus" element={<AboutUs/>}/>
           <Route path="/admissionform" element={<AdmissionForm/>}/>  
+          <Route path="/staff" element={<Staff/>}/>  
         </Routes>
         <Footer/>
       </div>

@@ -92,6 +92,7 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subject_name
+    
 
 class Result(models.Model):
     student = models.OneToOneField(User, on_delete=models.DO_NOTHING)
@@ -124,7 +125,7 @@ class class_subject(models.Model):
     subject = models.ManyToManyField(Subject)
 
     def __str__(self):
-        return f"Class {self.standard}"
+        return f"{self.standard}"
     
 
 class Blog(models.Model):

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import authenticate
-from .models import User, SubGrade, Subject, Blog, Announcement, Event, Fee, AdmissionForm, Admission
+from .models import User, SubGrade, Subject, Blog, Announcement, Event, Fee, AdmissionForm, Admission, class_subject
 import datetime
 
 class UserRegistrationSerializers(serializers.ModelSerializer):
@@ -70,6 +70,13 @@ class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
         fields = ['subject_name']
+
+
+class ClasssubjectSerializer(serializers.ModelSerializer):
+    subject = SubjectSerializer(many=True, read_only = True)
+    class Meta:
+        model = class_subject
+        fields = "__all__"
 
 
 class ResultSerializer(serializers.ModelSerializer):

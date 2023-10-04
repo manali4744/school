@@ -1,5 +1,6 @@
 from django.urls import path
 from core.views import *
+from .views import home
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -22,5 +23,7 @@ urlpatterns = [
     path('requestapprove/', RequestApproveView.as_view(), name="requestapprove"),
     path('requestapprove/<int:id>/<str:role>/', RequestApproveView.as_view(), name="requestapprove"),
     path('requestapprove/<str:role>/', RequestApproveView.as_view(), name="requestapprove"),
-
+    path('', home, name='captcha'),
+    path('subject/', SubjectView.as_view(), name="subject"),
+    path('subject/<str:std>/', SubjectView.as_view(), name="subject-std")
 ]

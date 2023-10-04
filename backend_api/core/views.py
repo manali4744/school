@@ -1,15 +1,17 @@
+from django.shortcuts import render
+from .forms import MyForm
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import (UserRegistrationSerializers, UserLoginSerializer, UserInformationSerializer, ResultSerializer, 
                         UserInfoSerializer, BlogSerializer, AnnouncementSerializer, EventSerializer, FeeSerializer, 
-                        AdmissionFormSerializers, UserRequestSerializer)
+                        AdmissionFormSerializers, UserRequestSerializer, SubjectSerializer, ClasssubjectSerializer)
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 import json
-from .models import (User, Result, SubGrade, Blog, Announcement, Event, 
-                    Fee, Admission, AdmissionForm)
+from .models import (User, Result, SubGrade, Blog, Announcement, Event, class_subject,
+                    Fee, Admission, AdmissionForm, Subject)
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
@@ -233,6 +235,32 @@ class RequestApproveView(APIView):
                 user.save()
             serializer = UserRequestSerializer(user)
             return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+        
+
+class SubjectView(APIView):
+    def get(self,request, std=None, format=None):
+        if std is not None:
+            print(std)
+            std = class_subject.objects.get(standard=int(std))
+            print(std.subject.all())
+            serializer = ClasssubjectSerializer(std)
+            return Response({"status": status.HTTP_200_OK, "data" : serializer.data})
+        else:
+            subject = Subject.objects.all()
+            serializer = SubjectSerializer(subject, many=True)
+            subject_name = [item["subject_name"] for item in serializer.data]
+            return Response({"status": status.HTTP_200_OK, "subject": subject_name})    
+
+
+def home(request):
+   if request.method=="POST":
+      form=MyForm(request.POST)
+      if form.is_valid():
+         print("success")
+      else:
+         print("fail")
+   form=MyForm()
+   return render(request,"home.html",{"form":form})
 
 
 

@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Vertical spacing between rows */
+    padding-top: 40px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ensure rows take the full width of the container */
+    padding: 10px;
+}
+
+.div {
+    flex-basis: calc(25% - 20px); /* 25% width for each box with some spacing */
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add box shadow */
+    height: 220px;
+}
+
+h1{
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+}

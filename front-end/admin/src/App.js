@@ -8,6 +8,7 @@ import Student from './components/student';
 import Staff from './components/staff';
 import AdmissionFormDetails from './components/admissionform';
 import AdmissionMoreInfo from './components/admissionmoreinfo';
+import Class from './components/class';
 
 
 function App() {
@@ -48,6 +49,11 @@ function App() {
           <Route path='/admissionmoreinfo/:id' element={
             <Layout>
               <AdmissionMoreInfo/>
+            </Layout>
+          }/>
+          <Route path='/class/:std' element={
+            <Layout>
+              <Class/>
             </Layout>
           }/>
         </Routes>

@@ -5,7 +5,7 @@ function AboutUs () {
     return (
         <main>
             <div className="container-fluid">
-                <img src="http://127.0.0.1:3000/img/mainaboutus.avif" alt="" style={{width: "70%", height: "90%"}}/>
+                <img src="http://127.0.0.1:3000/img/mainaboutus.avif" alt="" style={{width: "30%", height: "30%"}}/>
             </div>
             <div className="heading__aboutus">
                 <h1>Our mission</h1>

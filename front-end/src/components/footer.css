@@ -1,7 +1,7 @@
 footer {
     text-align: center;
     padding: 3px;
-    background-image:radial-gradient(white 5%, lightblue ) !important;
+    background-image:radial-gradient(white 5%, #9d72ac  ) !important;
     color: black;
     position: relative;
     bottom: 0;
