@@ -1,0 +1,57 @@
+.studentinfo {
+    flex-basis: calc(33.33% - 20px); /* 33.33% for three items per row, minus the gap */
+    text-align: center;
+    padding: 20px;
+    justify-content: center;
+}
+
+.division {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1400px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Adjust spacing as needed */
+}
+
+.item {
+    text-align: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    height: 250px;
+    margin-bottom: 35px;
+}
+
+.student {
+    height: 200px;
+    background-color: #ddd;
+    margin: 15px;
+    padding: 5px;
+    text-align: start !important;
+}
+
+.student p {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100;
+    color: black;
+}
+
+.item h1 {
+    text-transform: uppercase;
+}
+
+.student-table {
+    width: 100%;
+    margin: 20px;
+}
+
+.student-table th {
+    text-transform: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}

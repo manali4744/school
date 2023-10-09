@@ -456,11 +456,11 @@ function AdmissionForm() {
                   <div className="container justify-content-center">
                     <p className="text-center">Review your information:</p>
                     <div style={{border: "1px solid gray", padding: "10px", marginBottom: "10px"}} id = "admissionformpdf">
-                      <div class="card" style={{width: "100%"}}>
-                          <div class="card-header">
+                      <div className="card" style={{width: "100%"}}>
+                          <div className="card-header">
                           Admission Form Details
                           </div>
-                          <table class="table">
+                          <table className="table">
                           <tbody>
                           <tr>
                               <td>First Name:</td>

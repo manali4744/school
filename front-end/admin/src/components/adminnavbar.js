@@ -4,24 +4,24 @@ import './css/adminnavbar.css'
 function AdminNavbar () {
     return (
         <>
-        <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/admin">HOME</a>
+        <ul className="nav justify-content-center">
+        <li className="nav-item">
+            <a className="nav-link active" aria-current="page" href="/admin">HOME</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/aboutus">About</a>
+        <li className="nav-item">
+            <a className="nav-link" href="/aboutus">About</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/enrollment">ENROLLMENT</a>
+        <li className="nav-item">
+            <a className="nav-link" href="/enrollment">ENROLLMENT</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/requestapprove">Request Approve</a>
+        <li className="nav-item">
+            <a className="nav-link" href="/requestapprove">Request Approve</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/staff">Staff</a>
+        <li className="nav-item">
+            <a className="nav-link" href="/staff">Staff</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/student">Student</a>
+        <li className="nav-item">
+            <a className="nav-link" href="/student">Student</a>
         </li>
         </ul>
         </>

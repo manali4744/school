@@ -1,0 +1,11 @@
+
+.table {
+    width: 100% !important;
+    margin-bottom: 0%;
+}
+
+.table tr{
+    text-align: start;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+}

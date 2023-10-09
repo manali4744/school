@@ -222,6 +222,8 @@ class AdmissionForm(models.Model):
     emailaddress = models.EmailField(null=True, blank=True)
     bloodgroup = models.CharField(null=True, blank=True)
     studentphoto = models.ImageField(null=True, blank=True)
+    is_accepted = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=True)
 
     def __str__(self):
         return self.emailaddress

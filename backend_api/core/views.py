@@ -194,6 +194,36 @@ class AdmissionFormView(APIView):
                 return Response({'data': serializer.data, 'status': status.HTTP_200_OK})
             except AdmissionForm.DoesNotExist:
                 return Response({'error': 'AdmissionForm not found', 'status': status.HTTP_404_NOT_FOUND})
+            
+    def delete(self, request, id=None):
+        data = AdmissionForm.objects.get(id=id)
+        data.delete()
+        return Response({'status': status.HTTP_200_OK})
+    
+    def put(self, request, id=None, info=None):
+        if info == 'accept':
+            try:
+                print(info)
+                data = AdmissionForm.objects.get(id=id)
+                data.is_accepted = True
+                data.is_pending = False
+                data.save()
+                return Response({'status': status.HTTP_200_OK})
+            except AdmissionForm.DoesNotExist:
+                print("here")
+                return Response({'status': status.HTTP_404_NOT_FOUND})
+        if info == 'reject':
+            try:
+                print(info)
+                data = AdmissionForm.objects.get(id=id)
+                data.is_accepted = False
+                data.is_pending = False
+                data.save()
+                return Response({'status': status.HTTP_200_OK})
+            except AdmissionForm.DoesNotExist:
+                print("here")
+                return Response({'status': status.HTTP_404_NOT_FOUND})
+
     
     def post(self, request, format=None):
         data= request.data
@@ -250,6 +280,15 @@ class SubjectView(APIView):
             serializer = SubjectSerializer(subject, many=True)
             subject_name = [item["subject_name"] for item in serializer.data]
             return Response({"status": status.HTTP_200_OK, "subject": subject_name})    
+
+
+class StudentListView(APIView):
+
+    def get(self, request, std=None, div=None, format=None):
+        student = User.objects.filter(Standards=int(std), division=div, is_student= True)
+        sorted_students = sorted(student, key=lambda x: x.name)
+        serializer = UserInfoSerializer(sorted_students, many=True)
+        return Response({"status":status.HTTP_200_OK, 'data': serializer.data})
 
 
 def home(request):

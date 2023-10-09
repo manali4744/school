@@ -11,9 +11,9 @@ function AdminHome() {
     ];
 
     const handleClick = (index) => {
-        const name = index.toString();
+        const name = index.substring(6); 
         navigate(`/class/${name}`)
-        console.log(index);
+        console.log(name);
     }
 
     return (
@@ -21,7 +21,7 @@ function AdminHome() {
             {boxData.map((box, index) => (
                 <div className="row" key={index}>
                     {boxData.slice(index * 4, (index * 4) + 4).map((boxItem, i) => (
-                        <button className="box" key={i} onClick={() => handleClick(i+1)}>
+                        <button className="box" key={i} onClick={() => handleClick(boxItem)}>
                             {boxItem}
                         </button>
                     ))}

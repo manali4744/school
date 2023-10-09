@@ -9,6 +9,7 @@ import Staff from './components/staff';
 import AdmissionFormDetails from './components/admissionform';
 import AdmissionMoreInfo from './components/admissionmoreinfo';
 import Class from './components/class';
+import Division from './components/division';
 
 
 function App() {
@@ -56,7 +57,13 @@ function App() {
               <Class/>
             </Layout>
           }/>
+           <Route path='/class/:std/:div' element={
+            <Layout>
+              <Division/>
+            </Layout>
+          }/>
         </Routes>
+        
       </div>
     </Router>
   );

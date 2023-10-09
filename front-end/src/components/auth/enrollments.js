@@ -128,7 +128,7 @@ function Enrollment() {
                                     <Modal.Title>Fees structure</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                <table class="table">
+                                <table className="table">
                                 <thead>
                                     <tr>
                                     <th scope="col">Standard</th>

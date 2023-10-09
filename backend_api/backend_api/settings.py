@@ -156,7 +156,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://127.0.0.1:8000",
 ]
-CORS_ALLOW_METHODS = ('POST', 'PUT')  
+CORS_ALLOW_METHODS = ('POST', 'PUT', 'DELETE', 'GET')  
 
 CORS_ALLOW_HEADERS = [
 'accept',
