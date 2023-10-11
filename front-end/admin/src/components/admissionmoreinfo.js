@@ -22,9 +22,7 @@ function AdmissionMoreInfo () {
 
     const deletedata = async () => {
         try {
-            console.log(id);
             const response = await axios.delete(`http://127.0.0.1:8000/admissionform/${id}/`);
-            console.log(response);
            navigate('/enrollment')
         } catch (error) {
             console.error("Error deleting data:", error);
@@ -44,9 +42,7 @@ function AdmissionMoreInfo () {
 
     const accept = async () => {
         try {
-            console.log(id);
             const response = await axios.put(`http://127.0.0.1:8000/admissionform/accept/${id}/`);
-            console.log(response, 'update');
             navigate('/enrollment')
         } catch (error) {
             console.error("Error deleting data:", error);
@@ -66,9 +62,7 @@ function AdmissionMoreInfo () {
 
     const reject = async () => {
         try {
-            console.log(id);
             const response = await axios.put(`http://127.0.0.1:8000/admissionform/reject/${id}/`);
-            console.log(response, 'update');
             navigate('/enrollment')
         } catch (error) {
             console.error("Error deleting data:", error);
@@ -165,14 +159,13 @@ function AdmissionMoreInfo () {
                     </tbody>
                     </table>
                 </div>
-
                 <div className="row">
-                <button className="btn btn-primary" onClick={() => setShowReject(true)}>Rejected</button>
-                {showreject &&  rejectModal}
-                <button className="btn btn-success" onClick={() => setShowAccept(true)}>Accept</button>
-                {showaccept &&  acceptModal}
-                <button className="btn btn-danger" onClick={() => setShowDelete(true)}>Delete</button>
-                {showdelete &&  deleteModal}
+                    <button className="btn btn-primary" onClick={() => setShowReject(true)}>Rejected</button>
+                    {showreject &&  rejectModal}
+                    <button className="btn btn-success" onClick={() => setShowAccept(true)}>Accept</button>
+                    {showaccept &&  acceptModal}
+                    <button className="btn btn-danger" onClick={() => setShowDelete(true)}>Delete</button>
+                    {showdelete &&  deleteModal}
                 </div>
             </div>
         </div>

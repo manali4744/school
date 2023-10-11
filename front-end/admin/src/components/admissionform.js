@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import './css/admissionform.css'
 
 function AdmissionFormDetails() {
     const [admissiondetails, setAdmissiondetails] = useState([]);
@@ -38,6 +39,8 @@ function AdmissionFormDetails() {
                 <th scope="col">First-Name</th>
                 <th scope="col">Last-Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Status</th>
+                <th scope="col">pending</th>
                 <th scope="col">More</th>
               </tr>
             </thead>
@@ -48,6 +51,8 @@ function AdmissionFormDetails() {
                   <td>{Admission.firstName}</td>
                   <td>{Admission.lastName}</td>
                   <td>{Admission.emailaddress}</td>
+                  <td>{Admission.is_accepted ? <p className="Accepted">Accepted</p> : (Admission.is_pending ? <p>-</p> : <p className="Rejected">Rejected</p>)}</td>
+                  <td>{Admission.is_pending ? <p>YES</p> : <p>NO</p>}</td>
                   <td>
                     <Link to={`/admissionmoreinfo/${Admission.id}`}>
                       <button>More</button>

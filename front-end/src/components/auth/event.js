@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './event.css'
+import './css/event.css'
 import axios from "axios";
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 

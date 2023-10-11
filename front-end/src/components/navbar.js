@@ -70,7 +70,6 @@
 //         message = 'Unknown Page';
 //     }
 
-//     console.log(message);
 //     handleCloseNavMenu();
 //   };
 

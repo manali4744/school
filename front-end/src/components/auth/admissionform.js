@@ -49,9 +49,6 @@ function AdmissionForm() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     if (isLastStep()) {
-
-      console.log("Form submitted with values:", values);
-
       
       const formFields = [
         'firstName',
@@ -104,11 +101,8 @@ function AdmissionForm() {
 
           setCompleted(true);
         }
-        // console.log('API response:', response.data.data);
-        // console.log(response.data.error);
       } catch (error) {
         alert(error.response.data)
-        console.log(error.response.data);
       }
     } else {
       handleNext();

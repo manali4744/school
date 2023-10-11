@@ -27,3 +27,16 @@ h1{
     text-transform: uppercase;
     font-family: 'Times New Roman', Times, serif;
 }
+
+.container p {
+    text-align: start;
+}
+
+.col-30 {
+   width: 30% !important;
+}
+
+.col-70 {
+    min-width: 70% !important;
+    max-width: 70% !important;
+}

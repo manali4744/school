@@ -22,7 +22,6 @@ function RequestApprove() {
     }
 
     const approveTeacher = async (id) => {
-        console.log(id, "Approve Teacher");
         const response =  await axios.get(`http://127.0.0.1:8000/requestapprove/${id}/teacher/`);
         if (response.status===200){
             setRequestapprove((prevRequestApprove) =>
@@ -32,7 +31,6 @@ function RequestApprove() {
     };
 
     const approveStudent = async (id) => {
-        console.log(id, "Approve Student");
         const response = await axios.get(`http://127.0.0.1:8000/requestapprove/${id}/student/`);
         if (response.status===200){
             setRequestapprove((prevRequestApprove) =>

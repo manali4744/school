@@ -119,7 +119,6 @@ function Register() {
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/register/', filteredFormData);
-    //   console.log('API Response:', response.data);
 
       if (response.data.status === 201) {
         // Redirect to the login page
@@ -156,7 +155,6 @@ function Register() {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log('Form Data:', formData);
       sendFormDataToAPI();
     }
   };

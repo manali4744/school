@@ -231,6 +231,7 @@ class AdmissionFormView(APIView):
         # data = json.loads(request.body.decode('utf-8'))
         serializer = AdmissionFormSerializers(data=data)
         if serializer.is_valid():
+            print(serializer)
             serializer.save()
             return Response({"data":serializer.data, "status":status.HTTP_201_CREATED}, status=status.HTTP_201_CREATED)
         if 'non_field_errors' in serializer.errors and len(serializer.errors['non_field_errors']) > 0:
@@ -279,8 +280,24 @@ class SubjectView(APIView):
             subject = Subject.objects.all()
             serializer = SubjectSerializer(subject, many=True)
             subject_name = [item["subject_name"] for item in serializer.data]
-            return Response({"status": status.HTTP_200_OK, "subject": subject_name})    
+            return Response({"status": status.HTTP_200_OK, "subject": subject_name})
+        
 
+    def post(self, request, std=None, format=None):
+        if std is not None:
+            print("here", std)
+            subject = request.POST.get('subject_name')
+            existing_subject = Subject.objects.get(subject_name = subject)
+            print(existing_subject)
+            return Response({"status": status.HTTP_200_OK})    
+        else:
+            print(request.data)
+            serializer = SubjectSerializer(data=request.data)
+            print(serializer)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"status": status.HTTP_200_OK, "data":serializer.data})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class StudentListView(APIView):
 

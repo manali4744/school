@@ -13,6 +13,10 @@ import Enrollment from './components/auth/enrollments';
 import AboutUs from './components/auth/aboutus';
 import AdmissionForm from './components/auth/admissionform';
 import Staff from './components/auth/staff';
+import AcademicProgramming from './components/auth/academicprogramming';
+import TherapeuticApproach from './components/auth/therapeuticapproach';
+import SchoolEngagementservices from './components/auth/schoolengagementservices';
+import TransitionServices from './components/auth/transitionservices';
 
 
 function App() {
@@ -33,6 +37,10 @@ function App() {
           <Route path="/aboutus" element={<AboutUs/>}/>
           <Route path="/admissionform" element={<AdmissionForm/>}/>  
           <Route path="/staff" element={<Staff/>}/>  
+          <Route path="/academicprogramming" element={<AcademicProgramming/>}/> 
+          <Route path="/therapeuticapproach" element={<TherapeuticApproach/>}/> 
+          <Route path="/schoolengagement" element={<SchoolEngagementservices/>}/> 
+          <Route path="/transitionservices" element={<TransitionServices/>}/> 
         </Routes>
         <Footer/>
       </div>

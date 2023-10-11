@@ -36,15 +36,11 @@ function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
     try {
         const response = await axios.post('http://127.0.0.1:8000/login/', formData);
-        console.log('Response Status:', response.data.status);
     
         if (response.data.auth_access) {
             if(response.data.admin){
-                console.log('Login successful');
-                console.log(response.data.id);
                 const idToStore = response.data.id;
                 localStorage.setItem('userId', idToStore);
                 localStorage.setItem('jwt_token', response.data.auth_access)

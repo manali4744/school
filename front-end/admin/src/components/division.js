@@ -11,7 +11,6 @@ function Division () {
         async function fetchData() {
             try{
                 const response = await axios.get(`http://127.0.0.1:8000/student/${std}/${div}/`)
-                console.log(response.data.data)
                 setStudent(response.data.data)
             } catch(error){
                 console.log('Error:', error);

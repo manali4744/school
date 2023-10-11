@@ -1,8 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import the Link component
+import { Link, useNavigate } from "react-router-dom"; // Import the Link component
 import './newnavbar.css';
 
 function Navbar() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('jwt_token');
+
+    const handleStudentClick = () => {
+        try {
+          if (!token) {
+            navigate('/login');
+          } else {
+            navigate('/information');
+          }
+        } catch (error) {
+          console.error('An error occurred during navigation:', error);
+        }
+    };
+    
+    const handleStudentLogout = () => {
+        localStorage.removeItem('jwt_token');
+        navigate('/login')
+    }
+
     return (
         <ul className="nav justify-content-center">
             <li className="nav-item">
@@ -14,10 +34,10 @@ function Navbar() {
             <li className="nav-item dropdown">
                 <a className="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">SERVICES</a>
                 <ul className="dropdown-menu">
-                    <li><Link className="dropdown-item" to="#">Academic Programming</Link></li> {/* Use Link */}
-                    <li><Link className="dropdown-item" to="#">Therapeutic Approach</Link></li> {/* Use Link */}
-                    <li><Link className="dropdown-item" to="#">School Engagement</Link></li> {/* Use Link */}
-                    <li><Link className="dropdown-item" to="#">Transition Services</Link></li> {/* Use Link */}
+                    <li><Link className="dropdown-item" to="/academicprogramming">Academic Programming</Link></li> {/* Use Link */}
+                    <li><Link className="dropdown-item" to="/therapeuticapproach">Therapeutic Approach</Link></li> {/* Use Link */}
+                    <li><Link className="dropdown-item" to="/schoolengagement">School Engagement</Link></li> {/* Use Link */}
+                    <li><Link className="dropdown-item" to="/transitionservices">Transition Services</Link></li> {/* Use Link */}
                 </ul>
             </li>
             <li className="nav-item">
@@ -30,7 +50,7 @@ function Navbar() {
                 <Link className="nav-link" to="/staff">Staff</Link> {/* Use Link */}
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/login">Student</Link> {/* Use Link */}
+                <a className="nav-link student" onClick={handleStudentClick}>Student</a> {/* Use Link */}
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="#">Feedback</Link> {/* Use Link */}
@@ -38,6 +58,9 @@ function Navbar() {
             <li className="nav-item">
                 <Link className="nav-link" to="#">Contact</Link> {/* Use Link */}
             </li>
+            {token &&  <li className="nav-item">
+                <a className="nav-link student" onClick={handleStudentLogout}>Logout</a> {/* Use Link */}
+            </li>}
         </ul>
     );
 }

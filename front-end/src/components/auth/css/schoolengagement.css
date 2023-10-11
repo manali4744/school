@@ -1,0 +1,18 @@
+.heading__schoolengagement{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Horizontally center the child */
+    align-items: center; /* Vertically center the child */
+    /* background-color: azure; */
+    background-image: linear-gradient(rgb(208, 225, 234) 1%, rgb(228, 233, 236) 10%, rgb(228, 233, 236) 90%, rgb(208, 225, 234) 100%);
+}
+
+.heading__schoolengagement h1 {
+    margin-top: 30px;
+}
+
+.schoolengagement p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    text-align: center;
+}

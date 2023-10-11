@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './home.css';
+import './css/home.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 
@@ -14,7 +14,6 @@ function Home() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/announcement/');
                 setAnnouncementData(response.data.announcement);
-                console.log(response.data.announcement);
             } catch (error) {
                 console.log("Error:", error);
             }
@@ -74,7 +73,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Academic <br/>Programming</h5>
                                 <p className="card-text">Our Academy offers a comprehensive curriculum aligned <br/>with Connecticut State Standards. </p>
-                                <a href="#" className="btn btn-primary">Learn more</a>
+                                <a href="/academicprogramming" className="btn btn-primary">Learn more</a>
                             </div>
                         </div>
                     </div>
@@ -84,7 +83,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Therapeutic<br/>Approach </h5>
                                 <p className="card-text">Our Therapeutic Approach is what makes Academy a <br/>truly unique school environment for our students.</p>
-                                <a href="#" className="btn btn-primary">Learn more</a>
+                                <a href="/therapeuticapproach" className="btn btn-primary">Learn more</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +93,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">School Engagement<br/>Services </h5>
                                 <p className="card-text">We recognize that school is not easy for many students. For<br/> some students, it is simply overwhelming. </p>
-                                <a href="#" className="btn btn-primary">Learn more</a>
+                                <a href="/schoolengagement" className="btn btn-primary">Learn more</a>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Transition<br/>Services</h5>
                                 <p className="card-text">In working with even our youngest students, we have their <br/>long-term future in mind. </p>
-                                <a href="#" className="btn btn-primary">Learn more</a>
+                                <a href="/transitionservices" className="btn btn-primary">Learn more</a>
                             </div>
                         </div>
                     </div>

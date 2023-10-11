@@ -90,12 +90,8 @@ function Login() {
     };
     try {
       const response = await axios.post('http://127.0.0.1:8000/login/', filteredFormData);
-      console.log('Response Status:', response.data.status);
-      // console.log('Response auth:', response.data.auth_access); // Log the entire response
   
       if (response.data.auth_access) {
-        console.log('Login successful');
-        console.log(response.data.id);
         const idToStore = response.data.id;
         localStorage.setItem('userId', idToStore);
         localStorage.setItem('jwt_token', response.data.auth_access)
@@ -116,7 +112,6 @@ function Login() {
     } catch (error) {
       alert("User Not found")
       navigate('/register')
-      // console.error('API Error:', error);
     }
   };
 

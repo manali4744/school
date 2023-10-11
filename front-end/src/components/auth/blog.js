@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import './blog.css'
+import './css/blog.css'
 
 function Blog() {
 

@@ -1,4 +1,4 @@
-import './enrollment.css'
+import './css/enrollment.css'
 import { Button, Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
@@ -19,7 +19,6 @@ function Enrollment() {
                 setFeesdata(response.data.fees)
                 setAdmission(response.data.is_admission)
                 localStorage.setItem('admissionID', response.data.is_admission);
-                console.log(typeof(response.data.is_admission))
             } catch (error) {
                 console.log("Error:", error)
             }

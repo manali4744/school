@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import authenticate
-from .models import User, SubGrade, Subject, Blog, Announcement, Event, Fee, AdmissionForm, Admission, class_subject
+from .models import (User, SubGrade, Subject, Blog, Announcement, Event, Fee, 
+                     AdmissionForm, Admission, class_subject)
 import datetime
 
 class UserRegistrationSerializers(serializers.ModelSerializer):
@@ -67,9 +68,19 @@ class UserInformationSerializer(serializers.ModelSerializer):
     
 
 class SubjectSerializer(serializers.ModelSerializer):
+    subject_name = serializers.CharField(required=True)
     class Meta:
         model = Subject
         fields = ['subject_name']
+        extra_kwargs = {
+            'subject_name': {'required': True},
+        }
+
+    def create(self, validated_data):
+        existing_subject = Subject.objects.filter(**validated_data).first()
+        if existing_subject:
+            raise serializers.ValidationError("Subject already exists")
+        return Subject.objects.create(**validated_data)
 
 
 class ClasssubjectSerializer(serializers.ModelSerializer):
@@ -143,9 +154,12 @@ class AdmissionFormSerializers(serializers.ModelSerializer):
             MaxValueValidator(9999999999, message="Enter valid phonenumber.")
         ]
     )
+    is_accepted = serializers.BooleanField(default=False)
+    is_pending = serializers.BooleanField(default=True)
     class Meta:
         model = AdmissionForm
-        fields = '__all__'
+        fields = ['id','firstName', 'lastName', 'father_name', 'mother_name', 'birthdate', 'gender', 'address', 'city', 
+                  'country', 'zipcode', 'phonenumber', 'emailaddress', 'bloodgroup', 'studentphoto', 'is_accepted', 'is_pending']
         extra_kwargs = {
             'firstName': {'required': True},
             'lastName': {'required': True},

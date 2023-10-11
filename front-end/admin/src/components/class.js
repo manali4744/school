@@ -17,7 +17,6 @@ function Class() {
         async function fetchData() {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/subject/${std}`);
-                console.log(response.data.data)
                 setSubject(response.data.data.subject)
             } catch(error) {
                 console.log("Error:", error);
@@ -29,7 +28,6 @@ function Class() {
     const handleClick = (index) => {
         const name = index
         navigate(`/class/${std}/${name}`)
-        console.log(name);
     }
 
 
@@ -45,9 +43,18 @@ function Class() {
             </div>
         </div>
         <h1>Exploring Subjects</h1>
-        <p>{subject.map((sub, subInde) => (
-            <div className="container subject-name" key={subInde} style={{ boxShadow: '0 0 30px rgba(0,0,0,0.25)'}}> {sub.subject_name}</div>
-        ))}</p>
+        <div className="container">
+            <div class="row">
+                <div className="col col-30">
+                    {subject.map((sub, subInde) => (
+                    <p key={subInde}> {sub.subject_name}</p>
+                    ))}
+                </div>
+                <div className="col col-70">
+                    <h1>ADD - UPDATE- DELETE</h1>
+                </div>
+            </div>
+        </div>
         </>
     );
 }
