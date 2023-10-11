@@ -206,7 +206,7 @@ function Login() {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body2"  onClick={handleClickRegister}>
+                  <Link to="#" variant="body2"  onClick={handleClickRegister}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

@@ -44,7 +44,7 @@ function AdminLogin() {
                 const idToStore = response.data.id;
                 localStorage.setItem('userId', idToStore);
                 localStorage.setItem('jwt_token', response.data.auth_access)
-                navigate('/admin')
+                window.location.href = "http://localhost:3001/admin";
             } else {
                 window.location.href = 'http://localhost:3000/';
             }

@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import './css/home.css';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
+
+
+function scrollToTop() {
+    window.scrollTo(0, 0);
+}
 
 function Home() {
     const [announcementData, setAnnouncementData] = useState([]);
@@ -73,7 +79,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Academic <br/>Programming</h5>
                                 <p className="card-text">Our Academy offers a comprehensive curriculum aligned <br/>with Connecticut State Standards. </p>
-                                <a href="/academicprogramming" className="btn btn-primary">Learn more</a>
+                                <Link to="/academicprogramming" className="btn btn-primary" onClick={scrollToTop}>Learn more</Link>
                             </div>
                         </div>
                     </div>
@@ -83,7 +89,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Therapeutic<br/>Approach </h5>
                                 <p className="card-text">Our Therapeutic Approach is what makes Academy a <br/>truly unique school environment for our students.</p>
-                                <a href="/therapeuticapproach" className="btn btn-primary">Learn more</a>
+                                <Link to="/therapeuticapproach" className="btn btn-primary" onClick={scrollToTop}>Learn more</Link>
                             </div>
                         </div>
                     </div>
@@ -93,7 +99,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">School Engagement<br/>Services </h5>
                                 <p className="card-text">We recognize that school is not easy for many students. For<br/> some students, it is simply overwhelming. </p>
-                                <a href="/schoolengagement" className="btn btn-primary">Learn more</a>
+                                <Link to="/schoolengagement" className="btn btn-primary" onClick={scrollToTop}>Learn more</Link>
                             </div>
                         </div>
                     </div>
@@ -103,7 +109,7 @@ function Home() {
                             <div className="card-body">
                                 <h5 className="card-title">Transition<br/>Services</h5>
                                 <p className="card-text">In working with even our youngest students, we have their <br/>long-term future in mind. </p>
-                                <a href="/transitionservices" className="btn btn-primary">Learn more</a>
+                                <Link to="/transitionservices" className="btn btn-primary" onClick={scrollToTop}>Learn more</Link>
                             </div>
                         </div>
                     </div>
@@ -116,7 +122,7 @@ function Home() {
                 provide students with an environment in which they feel safe to learn, grow, and build positive relationships. Each student at Hope Academy <br/>receives individualized instruction aligned with the Connecticut State Standards as well as targeted intervention using specialized <br/>
                 methodologies when appropriate. Emphasis is placed on college and career readiness, and the development of executive functioning skills<br/>
                 for all students. </p>
-                < a href="#" className="btn btn-primary">Learn more</a>
+                 <Link to="#" className="btn btn-primary">Learn more</Link>
             </div>
         <div className="container-fluid" style={{height: "150px"}}>
 
@@ -132,7 +138,7 @@ function Home() {
                             <h1 className="event">Upcoming event date</h1>
                         </div>
                         <div className="item-end">
-                            <a href="/event" className="btn">All Events</a>
+                            <Link to="/event" className="btn">All Events</Link>
                         </div>
                     </div>
                     <table className="table">

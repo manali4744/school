@@ -10,7 +10,7 @@ import AdmissionFormDetails from './components/admissionform';
 import AdmissionMoreInfo from './components/admissionmoreinfo';
 import Class from './components/class';
 import Division from './components/division';
-import React, { useEffect} from "react";
+import React from "react";
 
 
 function App() {

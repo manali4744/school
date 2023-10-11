@@ -1,5 +1,6 @@
 import React from "react";
 import './css/adminnavbar.css'
+import { Link } from 'react-router-dom';
 
 function AdminNavbar () {
     const token = localStorage.getItem('jwt_token');
@@ -10,25 +11,25 @@ function AdminNavbar () {
         <>
         <ul className="nav justify-content-center">
             <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/admin">HOME</a>
+                <Link className="nav-link active" to="/admin">HOME</Link>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="/aboutus">About</a>
+                <Link className="nav-link" to="/aboutus">About</Link>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="/enrollment">ENROLLMENT</a>
+                <Link className="nav-link" to="/enrollment">ENROLLMENT</Link>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="/requestapprove">Request Approve</a>
+                <Link className="nav-link" to="/requestapprove">Request Approve</Link>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="/staff">Staff</a>
+                <Link className="nav-link" to="/staff">Staff</Link>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="/student">Student</a>
+                <Link className="nav-link" to="/student">Student</Link>
             </li>
             {token &&  <li className="nav-item">
-                <a className="nav-link" href="/" onClick={handleAdminLogout}>Logout</a>
+                <Link className="nav-link" to="/" onClick={handleAdminLogout}>Logout</Link>
             </li>}
         </ul>
         </>

@@ -274,7 +274,7 @@ function Register() {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body2" onClick = {handleClickLogin}>
+                  <Link to="#" variant="body2" onClick = {handleClickLogin}>
                     Already have an account? Sign in
                   </Link>
                 </Grid>
