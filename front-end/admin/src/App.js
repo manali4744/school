@@ -15,11 +15,6 @@ import React, { useEffect} from "react";
 
 function App() {
   const token = localStorage.getItem('jwt_token');
-  
-  // if (!token) {
-  //   <AdminHome/>
-  // }
-
   return (
       <Router>
         <div className="App">
